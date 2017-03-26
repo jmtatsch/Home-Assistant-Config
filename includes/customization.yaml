@@ -1,0 +1,90 @@
+############################################################
+#
+# Customize
+#
+############################################################
+  sensor.yr_temperature:
+    friendly_name: Temperatur
+    icon: mdi:temperature-celsius
+
+  sensor.yr_symbol:
+    friendly_name: Symbol
+
+  sensor.yr_precipitation:
+    friendly_name: Niederschlag
+    icon: mdi:weather-rainy
+
+  sensor.yr_wind_speed:
+    friendly_name: Windgeschwindikeit
+    icon: mdi:weather-windy
+
+  sensor.yr_pressure:
+    friendly_name: Luftdruck
+    icon: mdi:weight
+
+  sensor.yr_wind_direction:
+    friendly_name: Windrichtung
+    icon: mdi:compass-outline
+
+  sensor.yr_humidity:
+    friendly_name: Luftfeuchtigkeit
+    icon: mdi:water-percent
+
+  sensor.yr_fog:
+    friendly_name: Nebel
+    con: mdi:weather-foggy
+
+  sensor.yr_cloudiness:
+    friendly_name: Bewölkungsgrad
+    icon: mdi:weather-cloudy
+    
+  sensor.yr_dewpoint_temperature:
+    friendly_name: Taupunkt
+    icon: mdi:oil-temperature
+    
+  device_tracker.windowsphone:
+    friendly_name: Julians Diensthandy
+    icon: mdi:cellphone
+    
+  device_tracker.jiphone:
+    friendly_name: Julians iPhone
+    icon: mdi:cellphone-iphone
+
+  device_tracker.jretinamacbookpro:
+    friendly_name: Julians MacBookProRetina
+    icon: mdi:laptop-mac
+    
+  device_tracker.14ab5149cee943dcb7726ed31b28cffc:
+    friendly_name: Julians Standort
+    icon: mdi:map-marker
+    
+  device_tracker.106210b1460b45cca97a7f17e3ba2beb:
+    friendly_name: Elisabeths Standort
+    icon: mdi:map-marker
+    
+  device_tracker.eipad:
+    friendly_name: Elisabeths iPad
+    icon: mdi:tablet-ipad
+
+  device_tracker.eiphone:
+    friendly_name: Elisabeths iPhone
+    icon: mdi:cellphone-iphone
+ 
+  device_tracker.emacbookpro:
+    friendly_name: Elisabeths MacBookPro
+    icon: mdi:laptop-mac
+
+  device_tracker.macbookpro:
+    friendly_name: Elisabeths MacBookProRetina
+    icon: mdi:laptop-mac
+    
+  google_travel_time.julian_home_eta:
+    friendly_name: Julian Home ETA
+    icon: mdi:car
+    
+  sensor.line_status:
+    friendly_name: Telefonleitung
+    icon: mdi:phone-classic
+    
+  sensor.phone:
+    icon: mdi:phone-classic

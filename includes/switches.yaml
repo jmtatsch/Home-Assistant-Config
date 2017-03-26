@@ -1,0 +1,2 @@
+- platform: fritzbox_callforwarding
+  password: !secret fritzbox_password

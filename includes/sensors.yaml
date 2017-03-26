@@ -1,0 +1,80 @@
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+
+  - platform: fritzbox_callmonitor
+    phonebook: 1
+    
+  - platform: fritzbox_netmonitor
+  
+  #printer status
+  #- platform: snmp
+  #  host: Brother
+  #  baseoid: 1.3.6.1.2.1.25.3.5.1.1.1
+
+# Weather Prediction
+  - platform: yr
+    monitored_conditions:
+      - temperature
+      - symbol
+      - precipitation
+      - windSpeed
+      - pressure
+      - windDirection
+      - humidity
+      - fog
+      - cloudiness
+      - dewpointTemperature
+
+  - platform: template
+    sensors:
+      line_status:
+        value_template: >-
+            {%- if is_state("sensor.phone", "idle") %}
+                Frei
+            {%  elif is_state("sensor.phone", "dialing") %}
+                Wähle '{{ states.sensor.phone.attributes.to }}'
+            {%  elif is_state("sensor.phone", "ringing") %}
+                Eingehender Anruf von '{{ states.sensor.phone.attributes.from }}'
+            {% else %}
+                Im Gespräch mit '{{ states.sensor.phone.attributes.with }}'
+            {%- endif %}
+        
+        
+        friendly_name: 'Telefonleitung'
+        
+  - platform: google_travel_time
+    name: julian_home_eta
+    api_key: !secret google_api_key
+    origin: device_tracker.14ab5149cee943dcb7726ed31b28cffc
+    destination: zone.home
+    options:
+      mode: transit
+      
+  - platform: miflora
+    mac: "C4:7C:8D:61:FD:52"
+    name: Sensor 1
+    timeout: 30
+    median: 3
+    retries: 1
+    monitored_conditions:
+      - moisture
+      - light
+      - temperature
+      - conductivity
+      - battery
+      
+  - platform: miflora
+    mac: "C4:7C:8D:62:02:6B"
+    name: Sensor 2
+    timeout: 30
+    median: 3
+    retries: 1
+    monitored_conditions:
+      - moisture
+      - light
+      - temperature
+      - conductivity
+      - battery

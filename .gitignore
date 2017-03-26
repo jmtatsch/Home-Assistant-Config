@@ -1,0 +1,27 @@
+*.pid
+*.xml
+*.csr
+*.crt
+*.key
+www
+OZW_Log.txt
+home-assistant.log
+home-assistant_v2.db
+*.db-journal
+lib
+deps
+tts
+secrets.yaml
+known_devices.yaml
+includes/zones.yaml
+includes/cameras.yaml
+*.conf
+plex.conf
+phue.conf
+harmony_media_room.conf
+pyozw.sqlite
+.*
+!/.gitignore
+Temporary Items
+Network Trash Folder
+certs

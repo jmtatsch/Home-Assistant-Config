@@ -1,0 +1,147 @@
+Wohnzimmer:
+  view: yes
+  entities:
+    - light.eckstrahler
+    - light.lightstrip
+    - light.stehlampe
+    - media_player.apple_tv
+    - media_player.lg_tv_remote
+    - device_tracker.playstation4
+
+Schlafzimmer:
+  view: yes
+  entities:
+    - light.nachtkastenlampe
+    - light.schlafzimmerlampe
+    - light.lightstrip_bett
+    - media_player.schlafzimmer
+
+Arbeitszimmer:
+  view: yes
+  entities:
+    - light.arbeitszimmer
+
+Küche:
+  view: yes
+  entities:
+    - light.kuechenlampe
+
+Bad:
+  view: yes
+  entities:
+    - light.bad
+
+Gang:
+  view: yes
+  entities:
+    - light.flurlicht
+    
+Balkon:
+  view: yes
+  entities:
+    - device_tracker.neighbourhoodwatch
+    - camera.neighbourhoodwatch
+
+Umwelt:
+  entities:
+    - sun.sun
+    - sensor.yr_cloudiness
+    - sensor.yr_temperature
+    - sensor.yr_symbol
+    - sensor.yr_precipitation
+    - sensor.yr_wind_speed
+    - sensor.yr_pressure
+    - sensor.yr_wind_direction
+    - sensor.yr_humidity
+    - sensor.yr_fog
+    - sensor.yr_cloudiness
+    - sensor.yr_dewpoint_temperature
+  
+System:
+  entities:
+    - sensor.ram_free
+    - sensor.disk_use_home
+  
+Telefonanschluss:
+  icon: mdi:phone-classic
+  entities:
+    - sensor.line_status
+    - sensor.phone
+    - sensor.fritz_netmonitor
+    - switch.08982030480__01622113547
+    - switch.41226622__01776090833
+  
+Julian:
+  icon: mdi:account
+  entities:
+    - device_tracker.14ab5149cee943dcb7726ed31b28cffc
+    - device_tracker.jiphone
+    - device_tracker.windowsphone
+    - device_tracker.jretinamacbookpro
+  
+Elisabeth:
+  icon: mdi:account
+  entities:
+    - device_tracker.106210b1460b45cca97a7f17e3ba2beb
+    - device_tracker.eiphone
+    - device_tracker.eipad
+    - device_tracker.macbookpro
+    - device_tracker.emacbookpro
+  
+Family:
+  icon: mdi:account-multiple
+  entities:
+    - group.julian
+    - group.elisabeth
+    
+Curcuma:
+  entities:
+    - sensor.sensor_1_conductivity
+    - sensor.sensor_1_light_intensity
+    - sensor.sensor_1_moisture
+    - sensor.sensor_1_temperature
+    - sensor.sensor_1_battery
+    
+Andale:
+  entities:
+    - sensor.sensor_2_conductivity
+    - sensor.sensor_2_light_intensity
+    - sensor.sensor_2_moisture
+    - sensor.sensor_2_temperature
+    - sensor.sensor_2_battery
+
+Pflanzen:
+  icon: mdi:flower
+  entities:
+    - group.curcuma
+    - group.andale
+
+Bewohner:
+  icon: mdi:account-multiple
+  view: yes
+  entities:
+    - group.julian
+    - group.elisabeth
+    - sensor.julian_home_eta
+   
+Drachenhorst:
+  #icon: /local/dragon.jpg
+  view: yes
+  entities:
+    - camera.drachenhorst
+     
+Villa Emerald:
+  #icon: /local/emerald.jpg
+  view: yes
+  entities:
+    - camera.villa_emerald_vorne
+    - camera.villa_emerald_hinten
+   
+Schokofabrik:
+  #icon: /local/chocolate.jpg
+  view: yes
+  entities:
+    - camera.schokofabrik_vorne
+    - camera.schokofabrik_hinten
+    - camera.schokofabrik_seite
+ 

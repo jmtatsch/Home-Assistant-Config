@@ -1,0 +1,78 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Augustenstrasse
+  # Location required to calculate the time the sun rises and sets
+  latitude: 48.151507
+  longitude: 11.564757
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 540
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Berlin
+  customize: !include includes/customization.yaml
+
+# Enables the frontend
+frontend:
+
+config:
+
+http:
+  api_password: !secret api_password
+  ssl_certificate: /home/homeassistant/.homeassistant/certs/fullchain.pem
+  ssl_key: /home/homeassistant/.homeassistant/certs/privkey.pem
+  base_url: kzmwjh6vhap6olw0.myfritz.net:8123
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  platform: google
+  language: 'de'
+
+#lgtv
+media_player:
+  platform: lg_netcast
+  host: 192.168.181.4
+
+#hues
+light:
+  platform: hue
+  host: 192.168.181.20
+  allow_unreachable: true
+
+#locative & fritz
+device_tracker:
+  - platform: locative
+  - platform: fritz
+
+#Includes
+
+sensor: !include includes/sensors.yaml
+camera: !include includes/cameras.yaml
+group: !include includes/groups.yaml
+scene: !include includes/scenes.yaml
+script: !include includes/scripts.yaml
+switch: !include includes/switches.yaml
+zone: !include includes/zones.yaml
+notify: !include includes/notify.yaml
+logger: !include includes/logger.yaml
+automation: !include includes/automation.yaml

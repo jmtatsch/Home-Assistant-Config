@@ -1,0 +1,35 @@
+sonos_say:
+  alias: "Sonos TTS script"
+  sequence:
+    - service: media_player.sonos_snapshot
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+    - service: media_player.sonos_unjoin
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+        volume_level: "{{ volume }}"
+    - service: tts.google_say
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+        message: "{{ message }}"
+    - delay: "{{ delay }}"
+    - service: media_player.sonos_restore
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+
+sonos_play_radio:
+  alias: "Radio play"
+  sequence:
+    - service: media_player.play_media
+      data:
+        media_content_id: x-rincon-mp3radio://fm03-icecast.mtg-r.net/fm03_mp3
+        media_content_type: music
+
+  #Play a file 
+  #  data:
+  #    entity_id: media_player.lounge
+  #    media_content_id: http://192.168.1.41:8123/local/doorbell.mp3
+  #    media_content_type: audio/mp3

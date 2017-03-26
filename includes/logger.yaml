@@ -1,0 +1,18 @@
+############################################################
+#
+# Logger
+#
+############################################################
+# Log Severities: notset, debug, info, warn, warning, error, fatal, critical
+
+default: info
+
+logs:
+  homeassistant.components.automation: warn
+  homeassistant.components.script: warn
+  homeassistant.components.sensor: warn
+  homeassistant.components.discovery: warn
+  homeassistant.components.camera: warn
+  homeassistant.components.http: warn
+  homeassistant.components.switch.fritzbox_callforwarding: debug
+  homeassistant.core: warn

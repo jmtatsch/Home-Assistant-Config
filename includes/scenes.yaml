@@ -1,0 +1,41 @@
+- name: Fernsehen
+  entities:
+    light.eckstrahler:
+      state: on
+      brightness: 170
+      rgb_color: [255,0,0]
+    light.lightstrip:
+      state: on
+      brightness: 170
+      rgb_color: [255,0,0]
+      
+- name: Relax
+  entities:
+    light.eckstrahler:
+      state: on
+      brightness: 170
+      rgb_color: [0,0,255]
+    light.lightstrip:
+      state: on
+      brightness: 170
+      rgb_color: [0,0,255]
+
+- name: Goodnite
+  entities:
+    light.lightstrip_bett:
+      state: on
+      transition: 10
+      brightness: 100
+      xy_color: [ 0.5529, 0.4107 ]
+    light.nachtkastenlampe:
+      state: on
+      transition: 10
+      brightness: 140
+      xy_color: [ 0.5013, 0.4242 ]
+    light.schlafzimmerlampe:
+      state: on
+      transition: 10
+      brightness: 100
+      xy_color: [ 0.5529, 0.4107 ]
+    media_player.schlafzimmer:
+      state: playing

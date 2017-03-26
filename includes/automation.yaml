@@ -1,0 +1,162 @@
+- alias: Turn on light when sun sets
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-01:00:00"
+  condition:
+    condition: state
+    entity_id: group.all_devices
+    state: 'home'
+  action:
+    service: light.turn_on
+    entity_id: group.living_room
+      
+- alias: "Trollchi auf dem Heimweg"
+  trigger:
+    platform: state
+    entity_id: device_tracker.14ab5149cee943dcb7726ed31b28cffc
+    from: 'parkring'
+    to: 'not_home'
+    for: 
+      minutes: 10
+  condition:
+      condition: time
+      after: '15:00:00'
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    service: notify.Augustenbot
+    data_template:
+      message: >
+        Trollchi is leaving work.
+        ETA: {{ states.sensor.julian_home_travel.attributes.duration_in_traffic }}
+      target: notify_all
+      
+- alias: 'Welcome home master' 
+  trigger:
+    platform: state
+    entity_id: device_tracker.jiphone, device_tracker.windowsphone
+    from: 'not_home'
+    to: 'home'
+  action:
+    service: notify.Augustenbot
+    data:
+      message: "came home"
+      title: "Trollchi"
+      target: notify_julian
+      
+- alias: "Arriving Home"
+  trigger:
+    - platform: state
+      entity_id: group.family
+      from: 'not_home'
+      to: 'home'
+  action:
+    service: climate.set_away_mode
+    data:
+      away_mode: off
+
+- alias: "Nobody Home"
+  trigger:
+    - platform: state
+      entity_id: group.family
+      from: 'home'
+      to: 'not_home'
+      for:
+        minutes: 10
+  action:
+    service: script.turn_on
+    entity_id: script.nobody_home
+      
+- alias: 'Sonos Durchsage'
+  trigger:
+    platform: state
+    entity_id: input_boolean.mytest
+  action:   
+    service: script.sonos_say
+    data:
+      sonos_entity: media_player.schlafzimmer
+      volume: 0.5
+      message: 'Trollchi testet die Sprachwiedergabe!'
+      delay: '00:00:05'
+      
+- alias: 'Ab ins Bett'
+  trigger:
+    platform: time
+    after: "22:00:00"
+  condition:
+    condition: state
+    entity_id: group.family
+    state: 'home'    
+  action:   
+    service: scene.turn_on
+    entity_id: scene.Goodnite
+    
+- alias: 'Gute Nacht'
+  trigger:
+    platform: time
+    after: '22:30:00'
+  action:
+    service: light.turn_off
+    entity_id:
+      - group.all_devices
+    data:
+      transition: 900
+
+- alias: "NeighborhoodWatch Motion"
+  trigger:
+    - platform: state
+      entity_id: sensor.camera__front_door
+      to: 'motion'
+  action:
+    service: notify.Augustenbot
+    data:
+      title: "NeighborhoodWatch Movement"
+      message: "Motion captured at front door"
+      data:
+        url: "http://neighbourhoodwatch:8081"
+        tag: 'front_door_motion'
+      target:
+        - notify_julian
+
+- alias: "Home Asssistant Update"
+  trigger:
+    - platform: state
+      entity_id: updater.updater
+  action:
+      service: notify.Augustenbot
+      data:
+        message: "Eine neue Version von {{ states.updater.updater.state }} Home Assistant ist verfügbar."
+        target:
+        - notify_all
+        
+- alias: "Wohnungstür offen"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door_opened
+      to: 'on'
+      for:
+        minutes: 2
+  action:
+    - service: notify.Augustenbot
+      data:
+        message: "Wohnungstür noch offen."
+        target:
+          - notify_all
+          
+- alias: "Alert if master bedroom plant needs water"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.master_bedroom_plant_moisture
+      below: 15
+  action:
+    - service: notify.Augustenbot
+      data:
+        message: "The master bedroom plant needs to be watered."
+        target:
+          - notify_all
+
