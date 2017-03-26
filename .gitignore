@@ -20,7 +20,6 @@ plex.conf
 phue.conf
 harmony_media_room.conf
 pyozw.sqlite
-.*
 !/.gitignore
 Temporary Items
 Network Trash Folder
