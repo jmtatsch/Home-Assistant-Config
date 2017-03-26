@@ -68,8 +68,6 @@ Telefonanschluss:
     - sensor.line_status
     - sensor.phone
     - sensor.fritz_netmonitor
-    - switch.08982030480__01622113547
-    - switch.41226622__01776090833
   
 Julian:
   icon: mdi:account
