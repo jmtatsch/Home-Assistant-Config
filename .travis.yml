@@ -2,9 +2,9 @@ language: python
 python:
   - "3.4"
 before_install:
-  - mv travis/secrets.yaml secrets.yaml
-  - mv travis/cameras.yaml inlcudes/cameras.yaml
-  - mv travis/zones.yaml includes/zones.yaml
+  - mv travis/travis_secrets.yaml secrets.yaml
+  - mv travis/travis_cameras.yaml includes/cameras.yaml
+  - mv travis/travis_zones.yaml includes/zones.yaml
 install:
   - pip3 install homeassistant
 script:
