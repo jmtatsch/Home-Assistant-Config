@@ -68,6 +68,8 @@ Telefonanschluss:
     - sensor.line_status
     - sensor.phone
     - sensor.fritz_netmonitor
+    - switch.callforwarding_0
+    - switch.callforwarding_1
   
 Julian:
   icon: mdi:account

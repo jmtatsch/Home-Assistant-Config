@@ -1,4 +1,4 @@
-- alias: Turn on light when sun sets
+- alias: "Licht nach Sonnenuntergang"
   trigger:
     platform: sun
     event: sunset
@@ -9,9 +9,9 @@
     state: 'home'
   action:
     service: light.turn_on
-    entity_id: group.living_room
+    entity_id: group.Wohnzimmer
       
-- alias: "Trollchi auf dem Heimweg"
+- alias: "Billy auf dem Heimweg"
   trigger:
     platform: state
     entity_id: device_tracker.14ab5149cee943dcb7726ed31b28cffc
@@ -32,24 +32,71 @@
     service: notify.Augustenbot
     data_template:
       message: >
-        Trollchi is leaving work.
+        Billy ist nun auf dem Heimweg.
         ETA: {{ states.sensor.julian_home_travel.attributes.duration_in_traffic }}
       target: notify_all
       
-- alias: 'Welcome home master' 
+- alias: 'Billy zu Hause' 
   trigger:
     platform: state
     entity_id: device_tracker.jiphone, device_tracker.windowsphone
     from: 'not_home'
     to: 'home'
   action:
-    service: notify.Augustenbot
-    data:
-      message: "came home"
-      title: "Trollchi"
-      target: notify_julian
+    - service: notify.Augustenbot
+      data:
+        title: "Billy"
+        message: "ist jetzt zu Hause"
+        target: notify_julian
+    - service: switch.turn_off
+      entity_id: switch.callforwarding_0
+
+- alias: 'Billy unterwegs' 
+  trigger:
+    platform: state
+    entity_id: device_tracker.jiphone, device_tracker.windowsphone
+    from: 'home'
+    to: 'not_home'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Billy"
+        message: "ist unterwegs"
+        target: notify_julian
+    - service: switch.turn_on
+      entity_id: switch.callforwarding_0
       
-- alias: "Arriving Home"
+- alias: 'Lilly zu Hause' 
+  trigger:
+    platform: state
+    entity_id: device_tracker.eiphone, device_tracker.emacbookpro
+    from: 'not_home'
+    to: 'home'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Lilly"
+        message: "ist jetzt zu Hause"
+        target: notify_julian
+    - service: switch.turn_off
+      entity_id: switch.callforwarding_1
+      
+- alias: 'Lilly unterwegs' 
+  trigger:
+    platform: state
+    entity_id: device_tracker.eiphone, device_tracker.emacbookpro
+    from: 'not_home'
+    to: 'home'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Lilly"
+        message: "ist jetzt unterwegs"
+        target: notify_julian
+    - service: switch.turn_on
+      entity_id: switch.callforwarding_1
+      
+- alias: "Jemand zu Hause"
   trigger:
     - platform: state
       entity_id: group.family
@@ -60,7 +107,7 @@
     data:
       away_mode: off
 
-- alias: "Nobody Home"
+- alias: "Niemand zu Hause"
   trigger:
     - platform: state
       entity_id: group.family
@@ -69,8 +116,11 @@
       for:
         minutes: 10
   action:
-    service: script.turn_on
-    entity_id: script.nobody_home
+    service: notify.Augustenbot
+    data:
+      title: "Niemand"
+      message: "ist mehr zu Hause"
+      target: notify_julian
       
 - alias: 'Sonos Durchsage'
   trigger:
@@ -81,7 +131,7 @@
     data:
       sonos_entity: media_player.schlafzimmer
       volume: 0.5
-      message: 'Trollchi testet die Sprachwiedergabe!'
+      message: 'Billy testet nur die Sprachwiedergabe!'
       delay: '00:00:05'
       
 - alias: 'Ab ins Bett'
@@ -107,34 +157,34 @@
     data:
       transition: 900
 
-- alias: "NeighborhoodWatch Motion"
+- alias: "Camera Motion"
   trigger:
     - platform: state
-      entity_id: sensor.camera__front_door
+      entity_id: sensor.camera
       to: 'motion'
   action:
     service: notify.Augustenbot
     data:
-      title: "NeighborhoodWatch Movement"
-      message: "Motion captured at front door"
+      title: "Camera "
+      message: "Motion captured at neighbourhoodwatch"
       data:
         url: "http://neighbourhoodwatch:8081"
-        tag: 'front_door_motion'
+        tag: 'neighbourhoodwatch_motion'
       target:
         - notify_julian
 
-- alias: "Home Asssistant Update"
+- alias: "Home Assistant Update"
   trigger:
     - platform: state
       entity_id: updater.updater
   action:
       service: notify.Augustenbot
       data:
-        message: "Eine neue Version von {{ states.updater.updater.state }} Home Assistant ist verfügbar."
+        message: "Version {{ states.updater.updater.state }} von Home Assistant ist nun verfügbar."
         target:
         - notify_all
         
-- alias: "Wohnungstür offen"
+- alias: "Wohnungstür noch offen"
   trigger:
     - platform: state
       entity_id: binary_sensor.front_door_opened
@@ -147,16 +197,15 @@
         message: "Wohnungstür noch offen."
         target:
           - notify_all
-          
-- alias: "Alert if master bedroom plant needs water"
+   
+- alias: "Curcuma braucht Wasser"
   trigger:
     - platform: numeric_state
-      entity_id: sensor.master_bedroom_plant_moisture
+      entity_id: sensor.sensor_1_moisture
       below: 15
   action:
     - service: notify.Augustenbot
       data:
-        message: "The master bedroom plant needs to be watered."
+        message: "Die Curcuma braucht Wasser."
         target:
           - notify_all
-

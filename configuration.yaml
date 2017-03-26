@@ -18,12 +18,12 @@ frontend:
 config:
 
 http:
-  api_password: !secret api_password
+  api_password: !secret homeassistant_api_password
   ssl_certificate: /home/homeassistant/.homeassistant/certs/fullchain.pem
   ssl_key: /home/homeassistant/.homeassistant/certs/privkey.pem
-  base_url: kzmwjh6vhap6olw0.myfritz.net:8123
+  base_url: !secret homeassistant_base_url
   ip_ban_enabled: True
-  login_attempts_threshold: 5
+  login_attempts_threshold: 3
 
 # Checks for available updates
 updater:

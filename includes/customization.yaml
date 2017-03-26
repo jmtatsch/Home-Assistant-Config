@@ -77,14 +77,20 @@
   device_tracker.macbookpro:
     friendly_name: Elisabeths MacBookProRetina
     icon: mdi:laptop-mac
-    
+
   google_travel_time.julian_home_eta:
     friendly_name: Julian Home ETA
     icon: mdi:car
-    
+
   sensor.line_status:
     friendly_name: Telefonleitung
     icon: mdi:phone-classic
-    
+
   sensor.phone:
     icon: mdi:phone-classic
+
+  switch.callforwarding_0:
+    friendly_name: Rufumleitung Julian
+
+  switch.callforwarding_1:
+    friendly_name: Rufumleitung Elisabeth
