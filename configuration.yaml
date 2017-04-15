@@ -66,6 +66,7 @@ device_tracker:
 
 #Includes
 
+binary_sensor: !include includes/binary_sensors.yaml
 sensor: !include includes/sensors.yaml
 camera: !include includes/cameras.yaml
 group: !include includes/groups.yaml

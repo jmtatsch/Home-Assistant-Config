@@ -1,4 +1,4 @@
-- alias: "Licht nach Sonnenuntergang"
+- alias: "Licht in der Dämmerung"
   trigger:
     platform: sun
     event: sunset
@@ -34,7 +34,7 @@
       message: >
         Billy ist nun auf dem Heimweg.
         ETA: {{ states.sensor.julian_home_travel.attributes.duration_in_traffic }}
-      target: notify_all
+      target: notify_julian
       
 - alias: 'Billy zu Hause' 
   trigger:
@@ -66,10 +66,62 @@
     - service: switch.turn_on
       entity_id: switch.callforwarding_0
       
+- alias: 'Rufumleitung Billy aktiviert' 
+  trigger:
+    platform: state
+    entity_id: switch.callforwarding_0
+    from: 'off'
+    to: 'on'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Billy"
+        message: "Rufumleitung aktiviert"
+        target: notify_julian
+        
+- alias: 'Rufumleitung Billy deaktiviert' 
+  trigger:
+    platform: state
+    entity_id: switch.callforwarding_0
+    from: 'on'
+    to: 'off'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Billy"
+        message: "Rufumleitung deaktiviert"
+        target: notify_julian
+        
+- alias: 'Rufumleitung Lilly aktiviert' 
+  trigger:
+    platform: state
+    entity_id: switch.callforwarding_1
+    from: 'off'
+    to: 'on'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Lilly"
+        message: "Rufumleitung aktiviert"
+        target: notify_julian
+        
+- alias: 'Rufumleitung Lilly deaktiviert' 
+  trigger:
+    platform: state
+    entity_id: switch.callforwarding_1
+    from: 'on'
+    to: 'off'
+  action:
+    - service: notify.Augustenbot
+      data:
+        title: "Lilly"
+        message: "Rufumleitung deaktiviert"
+        target: notify_julian
+      
 - alias: 'Lilly zu Hause' 
   trigger:
     platform: state
-    entity_id: device_tracker.eiphone, device_tracker.emacbookpro
+    entity_id: device_tracker.eiphone
     from: 'not_home'
     to: 'home'
   action:
@@ -84,9 +136,9 @@
 - alias: 'Lilly unterwegs' 
   trigger:
     platform: state
-    entity_id: device_tracker.eiphone, device_tracker.emacbookpro
-    from: 'not_home'
-    to: 'home'
+    entity_id: device_tracker.eiphone
+    from: 'home'
+    to: 'not_home'
   action:
     - service: notify.Augustenbot
       data:

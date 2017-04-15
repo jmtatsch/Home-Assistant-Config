@@ -5,8 +5,14 @@
       - type: memory_free
 
   - platform: fritzbox_callmonitor
-    phonebook: 1
-    
+    username: admin
+    password: !secret fritzbox_password
+    phonebook: 0
+    prefixes:
+    - '+49'
+    - '+4989'
+    - '089'
+  
   - platform: fritzbox_netmonitor
   
   #printer status
@@ -78,3 +84,11 @@
       - temperature
       - conductivity
       - battery
+
+  - platform: mvglive
+    station: Augustenstraße
+    destination: Garching-Hochbrück
+
+  - platform: mvglive
+    station: Garching-Hochbrück
+    destination: Augustenstraße

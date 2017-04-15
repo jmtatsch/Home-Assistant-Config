@@ -54,6 +54,10 @@
     friendly_name: Julians MacBookProRetina
     icon: mdi:laptop-mac
     
+  device_tracker.47lk950sza:
+    friendly_name: Fernseher
+    icon: mdi:tv
+    
   device_tracker.14ab5149cee943dcb7726ed31b28cffc:
     friendly_name: Julians Standort
     icon: mdi:map-marker
