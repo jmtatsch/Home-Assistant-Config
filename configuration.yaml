@@ -10,17 +10,19 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Berlin
-  customize: !include includes/customization.yaml
+  customize: !include customize.yaml
 
 # Enables the frontend
 frontend:
+
+map:
 
 config:
 
 http:
   api_password: !secret homeassistant_api_password
-  ssl_certificate: /home/homeassistant/.homeassistant/certs/fullchain.pem
-  ssl_key: /home/homeassistant/.homeassistant/certs/privkey.pem
+  ssl_certificate: !secret ssl_certificate_path
+  ssl_key: !secret ssl_key_path
   base_url: !secret homeassistant_base_url
   ip_ban_enabled: True
   login_attempts_threshold: 3
@@ -40,40 +42,88 @@ history:
 # View all events in a logbook
 logbook:
 
+# Keep data 10 days
+recorder:
+    purge_keep_days: 10
+
 # Track the sun
 sun:
+
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+# ios
+ios:
+
+# telegram
+telegram_bot:
+  - platform: broadcast
+    api_key: !secret telegram_api
+    allowed_chat_ids:
+      - !secret telegram_id_julian
+      - !secret telegram_id_elisabeth
 
 # Text to speech
 tts:
   platform: google
   language: 'de'
 
-#lgtv
+# homematic
+homematic:
+  interfaces:
+    wireless:
+      host: 192.168.181.24
+      resolvenames: metadata
+
+homekit:
+  pincode: !secret homekit_pincode
+
+# fritz
+#fritz:
+#  fritzboxes:
+#   - host: 192.168.181.1
+#     password: !secret fritzbox_password
+
+# lgtv
 media_player:
   platform: lg_netcast
-  host: 192.168.181.4
+  host: 192.168.181.34
 
-#hues
+# hues
 light:
   platform: hue
   host: 192.168.181.20
   allow_unreachable: true
 
-#locative & fritz
+# locative & fritz
 device_tracker:
   - platform: locative
   - platform: fritz
 
-#Includes
+bmw_connected_drive:
+  mycar:
+    username: !secret bmw_connected_drive_user
+    password: !secret bmw_connected_drive_password
+    country: Germany
+
+# mqtt
+mqtt:
+  broker: localhost
+  discovery: true
+  discovery_prefix: homeassistant
+
+# Includes
 
 binary_sensor: !include includes/binary_sensors.yaml
 sensor: !include includes/sensors.yaml
 camera: !include includes/cameras.yaml
+image_processing: !include includes/image_processing.yaml
 group: !include includes/groups.yaml
 scene: !include includes/scenes.yaml
-script: !include includes/scripts.yaml
+script: !include scripts.yaml
 switch: !include includes/switches.yaml
 zone: !include includes/zones.yaml
 notify: !include includes/notify.yaml
 logger: !include includes/logger.yaml
-automation: !include includes/automation.yaml
+automation: !include automations.yaml
+plant: !include includes/plants.yaml

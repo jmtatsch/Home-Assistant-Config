@@ -1,0 +1,17 @@
+  Curcuma:
+    sensors:
+      moisture: sensor.sensor_1_moisture
+      battery: sensor.sensor_1_battery
+      temperature: sensor.sensor_1_temperature
+      conductivity: sensor.sensor_1_conductivity
+      brightness: sensor.sensor_1_light_intensity
+    min_moisture: 20
+
+  Andale:
+    sensors:
+      moisture: sensor.sensor_2_moisture
+      battery: sensor.sensor_2_battery
+      temperature: sensor.sensor_2_temperature
+      conductivity: sensor.sensor_2_conductivity
+      brightness: sensor.sensor_2_light_intensity
+    min_moisture: 20

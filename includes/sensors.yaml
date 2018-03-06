@@ -4,6 +4,10 @@
         arg: /home
       - type: memory_free
 
+  - platform: cert_expiry
+    host: augustenbox.tatsch.it
+    port: 8123
+
   - platform: fritzbox_callmonitor
     username: admin
     password: !secret fritzbox_password
@@ -12,9 +16,9 @@
     - '+49'
     - '+4989'
     - '089'
-  
+
   - platform: fritzbox_netmonitor
-  
+
   #printer status
   #- platform: snmp
   #  host: Brother
@@ -34,6 +38,24 @@
       - cloudiness
       - dewpointTemperature
 
+# Storm warnings
+
+  - platform: dwd_weather_warnings
+    name: warnings_muenchen
+    region_name: 'Kreis und Stadt München'
+
+  - platform: dwd_weather_warnings
+    name: warnings_geretsried
+    region_name: 'Kreis Bad Tölz-Wolfratshausen'
+
+  - platform: template
+    sensors:
+      dwd_warn_count:
+        value_template: '{{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_count }}'
+
+  - platform: season
+    type: astronomical
+
   - platform: template
     sensors:
       line_status:
@@ -47,37 +69,52 @@
             {% else %}
                 Im Gespräch mit '{{ states.sensor.phone.attributes.with }}'
             {%- endif %}
-        
-        
+
+
         friendly_name: 'Telefonleitung'
-        
+
+  - platform: mvglive
+    nextdeparture:
+    - station: Theresienstraße
+      destination: Feldmoching
+
   - platform: google_travel_time
     name: julian_home_eta
     api_key: !secret google_api_key
-    origin: device_tracker.14ab5149cee943dcb7726ed31b28cffc
+    origin: device_tracker.jiphone_ios
     destination: zone.home
     options:
       mode: transit
-      
+
+  - platform: google_travel_time
+    name: lilly_home_eta
+    api_key: !secret google_api_key
+    origin: device_tracker.eiphone_ios
+    destination: zone.home
+    options:
+      mode: driving
+
   - platform: miflora
     mac: "C4:7C:8D:61:FD:52"
+    adapter: hci1
     name: Sensor 1
-    timeout: 30
+    timeout: 60
     median: 3
-    retries: 1
+    retries: 2
     monitored_conditions:
       - moisture
       - light
       - temperature
       - conductivity
       - battery
-      
+
   - platform: miflora
     mac: "C4:7C:8D:62:02:6B"
+    adapter: hci1
     name: Sensor 2
-    timeout: 30
+    timeout: 60
     median: 3
-    retries: 1
+    retries: 2
     monitored_conditions:
       - moisture
       - light
@@ -85,10 +122,55 @@
       - conductivity
       - battery
 
-  - platform: mvglive
-    station: Augustenstraße
-    destination: Garching-Hochbrück
+  - platform: mqtt
+    state_topic: "augustenstrasse/esp8266_f86ab500"
+    name: "MicroPython"
 
-  - platform: mvglive
-    station: Garching-Hochbrück
-    destination: Augustenstraße
+  - platform: mqtt
+    state_topic: "topic/schokoladenfabrik/dafang/status"
+    name: "DaFang1"
+    json_attributes:
+      - RTSP-Server
+      - Uptime
+      - IR-Cut
+      - Wifi
+      - LEDs
+
+  - platform: mqtt
+    state_topic: "topic/drachenhorst/dafang2/status"
+    name: "DaFang2"
+    json_attributes:
+      - RTSP-Server
+      - Uptime
+      - IR-Cut
+      - Wifi
+      - LEDs
+
+  - platform: mqtt
+    state_topic: "topic/augustenstrasse/dafang3/status"
+    name: "DaFang3"
+    json_attributes:
+      - RTSP-Server
+      - Uptime
+      - IR-Cut
+      - LEDs
+      - Wifi.SSID
+
+  - platform: luftdaten
+    sensorid: 4611
+    monitored_conditions:
+      - P1
+      - P2
+
+  - platform: waqi
+    token: fc3290abac9ff3719ad4c374cc493ecdc89991d1
+    locations:
+      - munich
+    stations:
+      - lothstrasse
+
+  - platform: nokia_health
+    monitored_resources:
+      - "body/weight"
+      - "body/bmi"
+      - "body/fat"

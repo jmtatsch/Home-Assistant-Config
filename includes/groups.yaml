@@ -1,13 +1,31 @@
+Home:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.umwelt
+    - group.system
+    - group.telefonanschluss
+    - group.bewohner
+
 Wohnzimmer:
   view: yes
   entities:
     - light.eckstrahler
     - light.lightstrip
     - light.stehlampe
+    - climate.wohnzimmerheizung
+    - sensor.hygrometer_humidity
+    - sensor.hygrometer_temperature
     - media_player.apple_tv
     - media_player.lg_tv_remote
+    - device_tracker.tv
+    - device_tracker.appletv
     - device_tracker.playstation4
-    - device_tracker.47lk950sza
+    - device_tracker.homeserver
+    - device_tracker.knecht
+    - device_tracker.dafang3
+    - camera.dafang3
+    - sensor.dafang3
 
 Schlafzimmer:
   view: yes
@@ -15,12 +33,18 @@ Schlafzimmer:
     - light.nachtkastenlampe
     - light.schlafzimmerlampe
     - light.lightstrip_bett
+    - climate.schlafzimmerheizung
     - media_player.schlafzimmer
+    - device_tracker.wifiscale
+    - device_tracker.sonos
+    - binary_sensor.schlafzimmerfenster_state
+    - binary_sensor.schlafzimmertur_state
 
 Arbeitszimmer:
   view: yes
   entities:
-    - light.arbeitszimmer
+    - device_tracker.brother
+    - device_tracker.timecapsule
 
 Küche:
   view: yes
@@ -32,16 +56,23 @@ Bad:
   entities:
     - light.bad
 
-Gang:
+Flur:
   view: yes
   entities:
+    - binary_sensor.wohnungstur_state
+    - binary_sensor.rauchmelder_state
+    - binary_sensor.briefkasten_state
     - light.flurlicht
-    
+    - device_tracker.huebridge
+    - device_tracker.augustenbox
+    - device_tracker.emeraldwatchfront
+    - camera.villa_emerald_vorne
+
 Balkon:
   view: yes
   entities:
-    - device_tracker.neighbourhoodwatch
-    - camera.neighbourhoodwatch
+    - device_tracker.parkingwatch
+    - camera.parking_watch
 
 Umwelt:
   entities:
@@ -57,44 +88,57 @@ Umwelt:
     - sensor.yr_fog
     - sensor.yr_cloudiness
     - sensor.yr_dewpoint_temperature
-  
+    - binary_sensor.workday_sensor
+    - sensor.luftdaten_pm10
+    - sensor.luftdaten_pm25
+    - sensor.luftdaten_humidity
+    - sensor.luftdaten_temperature
+    - sensor.warnings_muenchen
+    - sensor.warnings_muenchen_current_warning_level
+    - sensor.warnings_muenchen_advance_warning_level
+
 System:
   entities:
-    - sensor.ram_free
+    - sensor.memory_free
     - sensor.disk_use_home
-  
+    - sensor.disk_use_percent_home
+    - sensor.ssl_certificate_expiry
+
 Telefonanschluss:
   icon: mdi:phone-classic
+  control: hidden
   entities:
     - sensor.line_status
     - sensor.phone
     - sensor.fritz_netmonitor
     - switch.callforwarding_0
     - switch.callforwarding_1
-  
+    - switch.callforwarding_2
+
 Julian:
   icon: mdi:account
   entities:
-    - device_tracker.14ab5149cee943dcb7726ed31b28cffc
+    - device_tracker.jiphone_ios
     - device_tracker.jiphone
+    - sensor.jiphone_battery_level
+    - sensor.jiphone_battery_state
     - device_tracker.windowsphone
     - device_tracker.jretinamacbookpro
-  
+    - sensor.augustenstrasse
+    - sensor.julian_home_eta
+
 Elisabeth:
   icon: mdi:account
   entities:
-    - device_tracker.106210b1460b45cca97a7f17e3ba2beb
+    - device_tracker.eiphone_ios
     - device_tracker.eiphone
+    - sensor.eiphone_battery_level
+    - sensor.eiphone_battery_state
     - device_tracker.eipad
-    - device_tracker.macbookpro
     - device_tracker.emacbookpro
-  
-Family:
-  icon: mdi:account-multiple
-  entities:
-    - group.julian
-    - group.elisabeth
-    
+    - device_tracker.eretinamacbookpro
+    - sensor.lilly_home_eta
+
 Curcuma:
   entities:
     - sensor.sensor_1_conductivity
@@ -102,7 +146,7 @@ Curcuma:
     - sensor.sensor_1_moisture
     - sensor.sensor_1_temperature
     - sensor.sensor_1_battery
-    
+
 Andale:
   entities:
     - sensor.sensor_2_conductivity
@@ -111,38 +155,36 @@ Andale:
     - sensor.sensor_2_temperature
     - sensor.sensor_2_battery
 
-Pflanzen:
-  icon: mdi:flower
-  entities:
-    - group.curcuma
-    - group.andale
-
 Bewohner:
   icon: mdi:account-multiple
   view: yes
   entities:
     - group.julian
     - group.elisabeth
-    - sensor.julian_home_eta
-   
+
 Drachenhorst:
   #icon: /local/dragon.jpg
   view: yes
   entities:
     - camera.drachenhorst
-     
+    - camera.dafang2
+    - sensor.dafang2
+
 Villa Emerald:
   #icon: /local/emerald.jpg
   view: yes
   entities:
     - camera.villa_emerald_vorne
-    - camera.villa_emerald_hinten
-   
+
 Schokofabrik:
   #icon: /local/chocolate.jpg
   view: yes
   entities:
+    - sensor.warnings_geretsried
+    - sensor.warnings_geretsried_current_warning_level
+    - sensor.warnings_geretsried_advance_warning_level
     - camera.schokofabrik_vorne
     - camera.schokofabrik_hinten
     - camera.schokofabrik_seite
- 
+    - camera.dafang1
+    - sensor.dafang1

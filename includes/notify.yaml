@@ -1,39 +1,31 @@
+
 - platform: telegram
   name: AugustenBot
   api_key: !secret telegram_api
   chat_id: !secret telegram_chat_id
-  
-  #notify groups
 
-- platform: group
+- platform: telegram
   name: telegram_julian
-  services:
-    - service: telegram
-      data:
-        target: !secret telegram_id_julian
+  chat_id: !secret telegram_id_julian
 
-- platform: group
+- platform: telegram
   name: telegram_elisabeth
-  services:
-    - service: telegram
-      data:
-        target: !secret telegram_id_elisabeth
+  chat_id: !secret telegram_id_elisabeth
 
 - platform: group
-  name: notify_julian 
+  name: julian
   services:
     - service: telegram_julian
     # add further ways to notify the user
 
 - platform: group
-  name: notify_elisabeth
+  name: elisabeth
   services:
     - service: telegram_elisabeth
     # add further ways to notify the user
 
 - platform: group
-  name: notify_all
+  name: all
   services:
-    - service: notify_julian
-    - service: notify_elisabeth
-    - service: sonos
+    - service: telegram_julian
+    - service: telegram_elisabeth

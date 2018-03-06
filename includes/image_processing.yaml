@@ -1,0 +1,19 @@
+- platform: dlib_face_detect
+  name: Gesichtserkennung
+  source:
+#  - entity_id: camera.Drachenhorst
+  - entity_id: camera.villa_emerald_vorne
+
+
+- platform: dlib_face_identify
+  name: Gesichtsidentifizierung
+  source:
+#  - entity_id: camera.Drachenhorst
+  - entity_id: camera.villa_emerald_vorne
+
+  faces:
+    julian: /home/tatsch/.homeassistant/www/faces/julian.jpg
+    elisabeth: /home/tatsch/.homeassistant/www/faces/elisabeth.jpg
+    birgit: /home/tatsch/.homeassistant/www/faces/birgit.jpg
+    klaus: /home/tatsch/.homeassistant/www/faces/klaus.jpg
+    laura: /home/tatsch/.homeassistant/www/faces/laura.jpg
