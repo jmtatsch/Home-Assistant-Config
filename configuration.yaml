@@ -88,6 +88,7 @@ homekit:
 media_player:
   platform: lg_netcast
   host: 192.168.181.34
+  access_token: SMQRSA
 
 # hues
 light:

@@ -127,34 +127,55 @@
     name: "MicroPython"
 
   - platform: mqtt
-    state_topic: "topic/schokoladenfabrik/dafang/status"
+    state_topic: "schokoladenfabrik/dafang/status"
+    value_template: '{{ value_json["RTSP-Server"] }}'
     name: "DaFang1"
     json_attributes:
       - RTSP-Server
       - Uptime
       - IR-Cut
-      - Wifi
-      - LEDs
+      - Wifi.SSID
+      - Wifi.Bitrate
+      - Wifi.SignalLevel
+      - Wifi.Linkquality
+      - Wifi.NoiseLevel
+      - LEDs.Blue
+      - LEDs.Yellow
+      - LEDs.Infrared
 
   - platform: mqtt
-    state_topic: "topic/drachenhorst/dafang2/status"
+    state_topic: "drachenhorst/dafang2/status"
+    value_template: '{{ value_json["RTSP-Server"] }}'
     name: "DaFang2"
     json_attributes:
       - RTSP-Server
       - Uptime
       - IR-Cut
-      - Wifi
-      - LEDs
+      - Wifi.SSID
+      - Wifi.Bitrate
+      - Wifi.SignalLevel
+      - Wifi.Linkquality
+      - Wifi.NoiseLevel
+      - LEDs.Blue
+      - LEDs.Yellow
+      - LEDs.Infrared
 
   - platform: mqtt
-    state_topic: "topic/augustenstrasse/dafang3/status"
+    state_topic: "augustenstrasse/dafang3/status"
+    value_template: '{{ value_json["RTSP-Server"] }}'
     name: "DaFang3"
     json_attributes:
       - RTSP-Server
       - Uptime
       - IR-Cut
-      - LEDs
       - Wifi.SSID
+      - Wifi.Bitrate
+      - Wifi.SignalLevel
+      - Wifi.Linkquality
+      - Wifi.NoiseLevel
+      - LEDs.Blue
+      - LEDs.Yellow
+      - LEDs.Infrared
 
   - platform: luftdaten
     sensorid: 4611

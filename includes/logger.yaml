@@ -13,12 +13,11 @@ logs:
   homeassistant.components.sensor: warn
   homeassistant.components.discovery: warn
   homeassistant.components.camera: warn
-  custom_components.camera.onvif: debug
   homeassistant.components.http: warn
-  homeassistant.components.switch.fritzbox_callforwarding: debug
-  homeassistant.components.sensor.nokia_health: debug
   homeassistant.components.sensor.waqi: debug
-  homeassistant.components.sensor.mqtt: debug
-
+  homeassistant.components.media_player.lg_tv_remote: debug
+  homeassistant.custom_components.switch.fritzbox_callforwarding: debug
+  homeassistant.custom_components.sensor.nokia_health: debug
+  homeassistant.custom_components.sensor.mqtt: debug
   homeassistant.core: warn
   requests.packages.urllib3.connectionpool: critical
