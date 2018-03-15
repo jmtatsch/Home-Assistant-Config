@@ -16,8 +16,8 @@ logs:
   homeassistant.components.http: warn
   homeassistant.components.sensor.waqi: debug
   homeassistant.components.media_player.lg_tv_remote: debug
-  homeassistant.custom_components.switch.fritzbox_callforwarding: debug
-  homeassistant.custom_components.sensor.nokia_health: debug
-  homeassistant.custom_components.sensor.mqtt: debug
+  custom_components.switch.fritzbox_callforwarding: debug
+  custom_components.sensor.nokia_health: debug
+  custom_components.sensor.mqtt: debug
   homeassistant.core: warn
   requests.packages.urllib3.connectionpool: critical
