@@ -122,9 +122,13 @@
       - conductivity
       - battery
 
+#  - platform: mqtt
+#    state_topic: "augustenstrasse/esp8266_f86ab500"
+#    name: "MicroPython"
+
   - platform: mqtt
-    state_topic: "augustenstrasse/esp8266_f86ab500"
-    name: "MicroPython"
+    state_topic: "schokoladenfabrik/dafang/motion"
+    name: "Dafang1 Bewegungsmelder"
 
   - platform: mqtt
     state_topic: "schokoladenfabrik/dafang/status"
@@ -161,6 +165,10 @@
       - LEDs.Infrared
 
   - platform: mqtt
+    state_topic: "drachenhorst/dafang2/motion"
+    name: "Dafang2 Bewegungsmelder"
+
+  - platform: mqtt
     state_topic: "augustenstrasse/dafang3/status"
     value_template: '{{ value_json["RTSP-Server"] }}'
     name: "DaFang3"
@@ -176,6 +184,10 @@
       - LEDs.Blue
       - LEDs.Yellow
       - LEDs.Infrared
+
+  - platform: mqtt
+    state_topic: "ausgustenstrasse/dafang3/motion"
+    name: "Dafang3 Bewegungsmelder"
 
   - platform: luftdaten
     sensorid: 4611
@@ -195,3 +207,12 @@
       - "body/weight"
       - "body/bmi"
       - "body/fat"
+
+  - platform: donnerwetter_pollenflug
+    zip_code: 80798
+    city: MUENCHEN
+    monitored_conditions:
+      - Hasel
+      - Birke
+      - Ambrosia
+      - Gräser
