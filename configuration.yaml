@@ -101,11 +101,11 @@ device_tracker:
   - platform: locative
   - platform: fritz
 
-bmw_connected_drive:
-  mycar:
-    username: !secret bmw_connected_drive_user
-    password: !secret bmw_connected_drive_password
-    country: Germany
+#bmw_connected_drive:
+#  Xsy:
+#    username: !secret bmw_connected_drive_user
+#    password: !secret bmw_connected_drive_password
+#    region: rest_of_world
 
 # mqtt
 mqtt:
@@ -127,4 +127,5 @@ zone: !include includes/zones.yaml
 notify: !include includes/notify.yaml
 logger: !include includes/logger.yaml
 automation: !include automations.yaml
+alert: !include includes/alerts.yaml
 plant: !include includes/plants.yaml
