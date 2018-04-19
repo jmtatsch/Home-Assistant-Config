@@ -12,8 +12,10 @@ home-assistant_v2.db
 lib
 deps
 tts
+__pycache__
 secrets.yaml
 known_devices.yaml
+entity_registry.yaml
 includes/zones.yaml
 includes/cameras.yaml
 *.conf
