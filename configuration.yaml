@@ -55,6 +55,11 @@ ffmpeg:
 # ios
 ios:
 
+homekit:
+
+# expose python_scripts as services
+python_script:
+
 # telegram
 telegram_bot:
   - platform: broadcast
@@ -74,9 +79,6 @@ homematic:
     wireless:
       host: 192.168.181.24
       resolvenames: metadata
-
-homekit:
-  pincode: !secret homekit_pincode
 
 # fritz
 #fritz:
@@ -107,7 +109,7 @@ device_tracker:
 #    password: !secret bmw_connected_drive_password
 #    region: rest_of_world
 
-# mqtt
+# mqtt with autodiscovery
 mqtt:
   broker: localhost
   discovery: true
