@@ -1,5 +1,5 @@
 - id: '1'
-  alias: "Licht in der D\xE4mmerung"
+  alias: Licht in der Dämmerung
   trigger:
     platform: sun
     event: sunset
@@ -11,7 +11,6 @@
   action:
     service: light.turn_on
     entity_id: group.Wohnzimmer
-
 - id: '2'
   alias: Billy auf dem Heimweg
   trigger:
@@ -38,7 +37,6 @@
         }}
 
         '
-
 - id: '3'
   alias: Billy zu Hause
   trigger:
@@ -53,7 +51,6 @@
       message: ist jetzt zu Hause
   - service: switch.turn_off
     entity_id: switch.callforwarding_2
-
 - id: '4'
   alias: Billy unterwegs
   trigger:
@@ -68,7 +65,6 @@
       message: ist unterwegs
   - service: switch.turn_on
     entity_id: switch.callforwarding_2
-
 - id: '5'
   alias: Rufumleitung Billy aktiviert
   trigger:
@@ -81,7 +77,6 @@
       message: Rufumleitung aktiviert
       title: Billy
     service: notify.julian
-
 - id: '6'
   alias: Rufumleitung Billy deaktiviert
   trigger:
@@ -94,7 +89,6 @@
     data:
       title: Billy
       message: Rufumleitung deaktiviert
-
 - id: '7'
   alias: Rufumleitung Hausverwaltung aktiviert
   trigger:
@@ -107,7 +101,6 @@
     data:
       title: Lilly
       message: Rufumleitung Hausverwaltung aktiviert
-
 - id: '8'
   alias: Rufumleitung Hausverwaltung deaktiviert
   trigger:
@@ -120,7 +113,6 @@
     data:
       title: Lilly
       message: Rufumleitung Hausverwaltung deaktiviert
-
 - id: '20'
   alias: Rufumleitung Kanzlei aktiviert
   trigger:
@@ -133,7 +125,6 @@
     data:
       title: Lilly
       message: Rufumleitung Kanzlei aktiviert
-
 - id: '21'
   alias: Rufumleitung Kanzlei deaktiviert
   trigger:
@@ -146,7 +137,6 @@
     data:
       title: Lilly
       message: Rufumleitung Kanzlei deaktiviert
-
 - id: '9'
   alias: Lilly zu Hause
   trigger:
@@ -163,7 +153,6 @@
     entity_id:
     - switch.callforwarding_0
     - switch.callforwarding_1
-
 - id: '10'
   alias: Lilly unterwegs
   trigger:
@@ -180,7 +169,6 @@
     entity_id:
     - switch.callforwarding_0
     - switch.callforwarding_1
-
 - id: '11'
   alias: Jemand zu Hause
   trigger:
@@ -196,7 +184,6 @@
     data:
       title: Niemand
       message: ist mehr zu Hause
-
 - id: '12'
   alias: Niemand zu Hause
   trigger:
@@ -211,7 +198,6 @@
     data:
       title: Niemand
       message: ist mehr zu Hause
-
 - id: '13'
   alias: Sonos Durchsage
   trigger:
@@ -224,7 +210,6 @@
       volume: 0.5
       message: Billy testet nur die Sprachwiedergabe!
       delay: 00:00:05
-
 - id: '14'
   alias: Ab ins Bett
   trigger:
@@ -236,8 +221,7 @@
     state: home
   action:
     service: scene.turn_on
-    entity_id: scene.Goodnite
-
+    entity_id: scene.good_night
 - id: '15'
   alias: Gute Nacht
   trigger:
@@ -247,7 +231,6 @@
     service: light.turn_off
     data:
       transition: 1
-
 - id: '16'
   alias: Camera Motion
   trigger:
@@ -262,7 +245,6 @@
       data:
         url: http://neighbourhoodwatch:8081
         tag: neighbourhoodwatch_motion
-
 - id: '17'
   alias: Home Assistant Update
   trigger:
@@ -271,22 +253,8 @@
   action:
     service: notify.julian
     data:
-      message: "Version {{ states.updater.updater.state }} von Home Assistant ist\
-        \ nun verf\xFCgbar."
-
-- id: '18'
-  alias: "Wohnungst\xFCr noch offen"
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.leq0758071_state
-    to: 'on'
-    for:
-      minutes: 2
-  action:
-  - service: notify.all
-    data:
-      message: "Wohnungst\xFCr noch offen."
-
+      message: Version {{ states.updater.updater.state }} von Home Assistant ist nun
+        verfügbar.
 - id: '19'
   alias: Curcuma braucht Wasser
   trigger:
@@ -297,41 +265,53 @@
   - service: notify.julian
     data:
       message: Die Curcuma braucht Wasser.
-
-- id: "22"
-  alias: "Detected a face"
+- id: '22'
+  alias: Detected a face
   trigger:
   - platform: event
     event_type: image_processing.detect_face
     event_data:
       entity_id: image_processing.Gesichtserkennung
   action:
-    - service: notify.julian
-      data:
-        message: "Detected a face."
-        target:
-          - notify_all
-
+  - service: notify.julian
+    data:
+      message: Detected a face.
+      target:
+      - notify_all
 - id: '23'
-  alias: "Wetterwarnung München"
-  initial_state: True
+  alias: Wetterwarnung München
+  initial_state: true
   trigger:
     platform: numeric_state
     entity_id: sensor.warnings_muenchen_current_warning_level
     above: 2
   action:
-    - service: notify.julian
-      data:
-        message:  |
-          {{ states.sensor.warnings_muenchen_current_warning_level.attributes.region_name }}
-          {% if states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_headline is defined %}
-          {{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_headline }}
-          Warnstufe: {{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_level }}
-          Von: {{ as_timestamp(states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_start) | timestamp_custom("%a %d.%m.%Y %H:%M",true) }}
-          Bis: {{ as_timestamp(states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_end) | timestamp_custom("%a %d.%m.%Y %H:%M",true) }}
-          {{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_description }}
-          {% endif %}
+  - service: notify.julian
+    data:
+      message: '{{ states.sensor.warnings_muenchen_current_warning_level.attributes.region_name
+        }}
 
+        {% if states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_headline
+        is defined %}
+
+        {{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_headline
+        }}
+
+        Warnstufe: {{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_level
+        }}
+
+        Von: {{ as_timestamp(states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_start)
+        | timestamp_custom("%a %d.%m.%Y %H:%M",true) }}
+
+        Bis: {{ as_timestamp(states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_end)
+        | timestamp_custom("%a %d.%m.%Y %H:%M",true) }}
+
+        {{ states.sensor.warnings_muenchen_current_warning_level.attributes.warning_1_description
+        }}
+
+        {% endif %}
+
+        '
 - id: '1506654915171'
   alias: Fernsehlicht an
   trigger:
@@ -343,7 +323,6 @@
   - data:
       entity_id: scene.Fernsehen
     service: scene.turn_on
-
 - id: '1506655401045'
   alias: Fernsehlicht aus
   trigger:
@@ -358,3 +337,152 @@
       - light.eckstrahler
       - light.lightstrip
     service: light.turn_off
+- action:
+  - data:
+      message: detektiert
+      title: Bewegung in der Schokoladenfabrik
+    service: notify.julian
+  alias: Bewegungsmelder Schokoladenfabrik
+  condition: []
+  id: '9522507257599'
+  trigger:
+  - payload: 'on'
+    platform: mqtt
+    topic: augustenstrasse/dafang1/motion
+- action:
+  - data:
+      message: detektiert
+      title: Bewegung im Drachenhorst
+    service: notify.julian
+  alias: Bewegungsmelder Drachenhorst
+  condition: []
+  id: '1522507257594'
+  trigger:
+  - payload: 'on'
+    platform: mqtt
+    topic: drachenhorst/dafang2/motion
+- action:
+  - data:
+      message: detektiert
+      title: Bewegung in der Augustenstrasse
+    service: notify.julian
+  alias: Bewegungsmelder Augustenstrasse
+  condition: []
+  id: '9522507257594'
+  trigger:
+  - payload: 'ON'
+    platform: mqtt
+    topic: augustenstrasse/dafang3/motion
+- action:
+  - delay: 00:00:02
+  - service: python_script.update_zone_occupancies
+  alias: Update Occupants
+  condition: []
+  id: '1522510838998'
+  initial_state: 'on'
+  trigger:
+  - entity_id: device_tracker.jiphone_ios
+    platform: state
+  - entity_id: device_tracker.eiphone_ios
+    platform: state
+- action:
+  - data:
+      entity_id: switch.dafang1_motion_detection
+    service: switch.turn_on
+  - data:
+      message: verlassen
+      title: Schokoladenfabrik
+    service: notify.julian
+  alias: Schokoladenfabrik verlassen
+  condition: []
+  id: '1522573800854'
+  trigger:
+  - below: '1'
+    entity_id: sensor.occupants_geretsried
+    platform: numeric_state
+- action:
+  - data:
+      entity_id: switch.dafang1_motion_detection
+    service: switch.turn_off
+  - data:
+      message: bewohnt
+      title: Schokoladenfabrik
+    service: notify.julian
+  alias: Schokoladenfabrik bewohnt
+  condition: []
+  id: '6612526605275'
+  trigger:
+  - above: '0'
+    entity_id: sensor.occupants_geretsried
+    platform: numeric_state
+- action:
+  - data:
+      entity_id: switch.dafang2_motion_detection
+    service: switch.turn_on
+  - data:
+      message: verlassen
+      title: Drachenhorst
+    service: notify.julian
+  alias: Drachenhorst verlassen
+  condition: []
+  id: '1522526500754'
+  trigger:
+  - below: '1'
+    entity_id: sensor.occupants_irma_wenke_str
+    platform: numeric_state
+- action:
+  - data:
+      entity_id: switch.dafang2_motion_detection
+    service: switch.turn_off
+  - data:
+      message: bewohnt
+      title: Drachenhorst
+    service: notify.julian
+  alias: Drachenhorst bewohnt
+  condition: []
+  id: '1522526605275'
+  trigger:
+  - above: '0'
+    entity_id: sensor.occupants_irma_wenke_str
+    platform: numeric_state
+- action:
+  - data:
+      entity_id: switch.dafang3_motion_detection
+    service: switch.turn_on
+  - data:
+      message: verlassen
+      title: Augustenstrasse
+    service: notify.julian
+  alias: Augustenstrasse verlassen
+  condition: []
+  id: '1522573800754'
+  trigger:
+  - below: '1'
+    entity_id: sensor.occupants_home
+    platform: numeric_state
+- action:
+  - data:
+      entity_id: switch.dafang3_motion_detection
+    service: switch.turn_off
+  - data:
+      message: bewohnt
+      title: Augustenstrasse
+    service: notify.julian
+  alias: Augustenstrasse bewohnt
+  condition: []
+  id: '6622526605275'
+  trigger:
+  - above: '0'
+    entity_id: sensor.occupants_home
+    platform: numeric_state
+- action:
+  - data:
+      message: That's an example that
+      title: '''Send a message'
+    service: notify.julian
+  alias: Neuer snap Augustenstr
+  condition: []
+  id: '1523685773653'
+  trigger:
+  - platform: mqtt
+    topic: augustenstrasse/dafang3/motion/snapshot

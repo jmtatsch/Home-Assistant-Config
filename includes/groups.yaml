@@ -23,9 +23,7 @@ Wohnzimmer:
     - device_tracker.playstation4
     - device_tracker.homeserver
     - device_tracker.knecht
-    - device_tracker.dafang3
-    - camera.dafang3
-    - sensor.dafang3
+    - group.dafang3
 
 Schlafzimmer:
   view: yes
@@ -93,6 +91,11 @@ Umwelt:
     - sensor.luftdaten_pm25
     - sensor.luftdaten_humidity
     - sensor.luftdaten_temperature
+    - sensor.season
+    - sensor.birke
+    - sensor.hasel
+    - sensor.graser
+    - sensor.ambrosia
     - sensor.warnings_muenchen
     - sensor.warnings_muenchen_current_warning_level
     - sensor.warnings_muenchen_advance_warning_level
@@ -126,6 +129,10 @@ Julian:
     - device_tracker.jretinamacbookpro
     - sensor.augustenstrasse
     - sensor.julian_home_eta
+    - sensor.julians_weight
+    - sensor.julians_fat_free_mass
+    - sensor.julians_fat_mass_weight
+    - sensor.julians_fat_ratio
 
 Elisabeth:
   icon: mdi:account
@@ -138,6 +145,10 @@ Elisabeth:
     - device_tracker.emacbookpro
     - device_tracker.eretinamacbookpro
     - sensor.lilly_home_eta
+    - sensor.elisabeths_weight
+    - sensor.elisabeths_fat_free_mass
+    - sensor.elisabeths_fat_mass_weight
+    - sensor.elisabeths_fat_ratio
 
 Curcuma:
   entities:
@@ -167,8 +178,7 @@ Drachenhorst:
   view: yes
   entities:
     - camera.drachenhorst
-    - camera.dafang2
-    - sensor.dafang2
+    - group.dafang2
 
 Villa Emerald:
   #icon: /local/emerald.jpg
@@ -186,5 +196,55 @@ Schokofabrik:
     - camera.schokofabrik_vorne
     - camera.schokofabrik_hinten
     - camera.schokofabrik_seite
+    - group.dafang1
+
+Dafang1:
     - camera.dafang1
+    - switch.dafang1_rtsp_server
     - sensor.dafang1
+    - device_tracker.dafang1
+    - sensor.dafang1_light_sensor
+    - switch.dafang1_ir_filter
+    - switch.dafang1_ir_led
+    - switch.dafang1_night_mode
+    - switch.dafang1_night_mode_auto
+    - switch.dafang1_blue_led
+    - switch.dafang1_yellow_led
+    - switch.dafang1_motion_detection
+    - switch.dafang1_motion_tracking
+    - camera.dafang1_motion_snapshot
+    - binary_sensor.dafang1_motion_sensor
+
+Dafang2:
+    - camera.dafang2
+    - switch.dafang2_rtsp_server
+    - sensor.dafang2
+    - device_tracker.dafang2
+    - sensor.dafang2_light_sensor
+    - switch.dafang2_ir_filter
+    - switch.dafang2_ir_led
+    - switch.dafang2_night_mode
+    - switch.dafang2_night_mode_auto
+    - switch.dafang2_blue_led
+    - switch.dafang2_yellow_led
+    - switch.dafang2_motion_detection
+    - switch.dafang2_motion_tracking
+    - camera.dafang2_motion_snapshot
+    - binary_sensor.dafang2_motion_sensor
+
+Dafang3:
+    - camera.dafang3
+    - switch.dafang3_rtsp_server
+    - sensor.dafang3
+    - device_tracker.dafang3
+    - sensor.dafang3_light_sensor
+    - switch.dafang3_ir_filter
+    - switch.dafang3_ir_led
+    - switch.dafang3_night_mode
+    - switch.dafang3_night_mode_auto
+    - switch.dafang3_blue_led
+    - switch.dafang3_yellow_led
+    - switch.dafang3_motion_detection
+    - switch.dafang3_motion_tracking
+    - camera.dafang3_motion_snapshot
+    - binary_sensor.dafang3_motion_sensor
