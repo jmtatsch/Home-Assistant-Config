@@ -127,67 +127,37 @@
 #    name: "MicroPython"
 
   - platform: mqtt
-    state_topic: "schokoladenfabrik/dafang/motion"
-    name: "Dafang1 Bewegungsmelder"
-
-  - platform: mqtt
-    state_topic: "schokoladenfabrik/dafang/status"
-    value_template: '{{ value_json["RTSP-Server"] }}'
+    state_topic: "schokoladenfabrik/dafang"
     name: "DaFang1"
     json_attributes:
-      - RTSP-Server
-      - Uptime
-      - IR-Cut
-      - Wifi.SSID
-      - Wifi.Bitrate
-      - Wifi.SignalLevel
-      - Wifi.Linkquality
-      - Wifi.NoiseLevel
-      - LEDs.Blue
-      - LEDs.Yellow
-      - LEDs.Infrared
+      - uptime
+      - ssid
+      - bitrate
+      - signal_level
+      - link_quality
+      - noise_level
 
   - platform: mqtt
-    state_topic: "drachenhorst/dafang2/status"
-    value_template: '{{ value_json["RTSP-Server"] }}'
+    state_topic: "drachenhorst/dafang2"
     name: "DaFang2"
     json_attributes:
-      - RTSP-Server
-      - Uptime
-      - IR-Cut
-      - Wifi.SSID
-      - Wifi.Bitrate
-      - Wifi.SignalLevel
-      - Wifi.Linkquality
-      - Wifi.NoiseLevel
-      - LEDs.Blue
-      - LEDs.Yellow
-      - LEDs.Infrared
+      - uptime
+      - ssid
+      - bitrate
+      - signal_level
+      - link_quality
+      - noise_level
 
   - platform: mqtt
-    state_topic: "drachenhorst/dafang2/motion"
-    name: "Dafang2 Bewegungsmelder"
-
-  - platform: mqtt
-    state_topic: "augustenstrasse/dafang3/status"
-    value_template: '{{ value_json["RTSP-Server"] }}'
+    state_topic: "augustenstrasse/dafang3"
     name: "DaFang3"
     json_attributes:
-      - RTSP-Server
-      - Uptime
-      - IR-Cut
-      - Wifi.SSID
-      - Wifi.Bitrate
-      - Wifi.SignalLevel
-      - Wifi.Linkquality
-      - Wifi.NoiseLevel
-      - LEDs.Blue
-      - LEDs.Yellow
-      - LEDs.Infrared
-
-  - platform: mqtt
-    state_topic: "ausgustenstrasse/dafang3/motion"
-    name: "Dafang3 Bewegungsmelder"
+      - uptime
+      - ssid
+      - bitrate
+      - signal_level
+      - link_quality
+      - noise_level
 
   - platform: luftdaten
     sensorid: 4611
@@ -203,10 +173,21 @@
       - lothstrasse
 
   - platform: nokia_health
-    monitored_resources:
-      - "body/weight"
-      - "body/bmi"
-      - "body/fat"
+    username: Julian
+    monitored_conditions:
+      - weight
+      - fat_free_mass
+      - fat_mass_weight
+      - fat_ratio
+
+  - platform: nokia_health
+    username: Elisabeth
+    monitored_conditions:
+      - weight
+      - fat_free_mass
+      - fat_mass_weight
+      - fat_ratio
+
 
   - platform: donnerwetter_pollenflug
     zip_code: 80798

@@ -14,11 +14,11 @@ import voluptuous as vol
 from homeassistant.core import callback
 from homeassistant.components.http import HomeAssistantView
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import MASS_KILOGRAMS
+from homeassistant.const import MASS_KILOGRAMS, CONF_MONITORED_CONDITIONS, CONF_USERNAME
 from homeassistant.helpers.entity import Entity
 import homeassistant.helpers.config_validation as cv
 from homeassistant.util.json import load_json, save_json
-from homeassistant.util import Throttle
+from homeassistant.util import Throttle, slugify
 
 REQUIREMENTS = ['nokia==0.4.0']
 
@@ -33,80 +33,50 @@ ATTR_CLIENT_ID: 'consumer_key'
 ATTR_CLIENT_SECRET: 'consumer_secret'
 ATTR_LAST_SAVED_AT = 'last_saved_at'
 
-CONF_MONITORED_RESOURCES = 'monitored_resources'
 CONF_CLOCK_FORMAT = 'clock_format'
 CONF_ATTRIBUTION = 'Data provided by health.nokia.com'
 
 DEPENDENCIES = ['http']
 
 NOKIA_HEALTH_CONFIG_FILE = 'nokia_health.conf'
-NOKIA_HEALTH_DEFAULT_RESOURCES = ['body/weight']
+NOKIA_HEALTH_DEFAULT_RESOURCES = ['weight']
 NOKIA_HEALTH_AUTH_CALLBACK_PATH = 'https://developer.health.nokia.com/en/partner/add'
 NOKIA_HEALTH_AUTH_START = 'https://developer.health.nokia.com/en/partner/add'  # FIXME: look this up
 SCAN_INTERVAL = datetime.timedelta(minutes=30)
 
 DEFAULT_CONFIG = {
-    'access_token': 'your_access_token',
-    'access_token_secret': 'your_access_token_secret',
-    'consumer_key': 'your_consumer_key',
-    'consumer_secret': 'your_consumer_secret',
-    'user_id': 'your_user_id'
-}
-
-NOKIA_HEALTH_RESOURCES_LIST = {
-    'body/bmi': ['BMI', 'BMI', 'human'],
-    'body/fat': ['Body Fat', '%', 'human'],
-    'body/weight': ['Weight', '', 'human']
-}
-
-NOKIA_HEALTH_MEASUREMENTS = {
-    'en_US': {
-        'duration': 'ms',
-        'distance': 'mi',
-        'elevation': 'ft',
-        'height': 'in',
-        'weight': 'lbs',
-        'body': 'in',
-        'liquids': 'fl. oz.',
-        'blood glucose': 'mg/dL',
-        'battery': '',
-    },
-    'en_GB': {
-        'duration': 'milliseconds',
-        'distance': 'kilometers',
-        'elevation': 'meters',
-        'height': 'centimeters',
-        'weight': 'stone',
-        'body': 'centimeters',
-        'liquids': 'milliliters',
-        'blood glucose': 'mmol/L',
-        'battery': '',
-    },
-    'metric': {
-        'duration': 'milliseconds',
-        'distance': 'kilometers',
-        'elevation': 'meters',
-        'height': 'centimeters',
-        'weight': 'kilograms',
-        'body': 'centimeters',
-        'liquids': 'milliliters',
-        'blood glucose': 'mmol/L',
-        'battery': '',
+    'your_username': {
+        'access_token': 'your_access_token',
+        'access_token_secret': 'your_access_token_secret',
+        'consumer_key': 'your_consumer_key',
+        'consumer_secret': 'your_consumer_secret',
+        'user_id': 'your_user_id'
     }
 }
 
-BATTERY_LEVELS = {
-    'High': 100,
-    'Medium': 50,
-    'Low': 20,
-    'Empty': 0
+NOKIA_HEALTH_RESOURCES_LIST = {
+    'weight': {'friendly_name': 'Weight', 'unit_of_measurement': 'kg', 'icon': 'mdi:weight-kilogram'},
+    'fat_mass_weight': {'friendly_name': 'Fat Mass Weight', 'unit_of_measurement': 'kg', 'icon': 'mdi:weight-kilogram'},
+    'fat_free_mass': {'friendly_name': 'Fat Free Mass', 'unit_of_measurement': 'kg', 'icon': 'mdi:weight-kilogram'},
+    'fat_ratio': {'friendly_name': 'Fat Ratio', 'unit_of_measurement': '%', 'icon': None},
+    'height': {'friendly_name': 'Height', 'unit_of_measurement': 'm', 'icon': 'mdi:ruler'},
+    'diastolic_blood_pressure': {'friendly_name': 'Diastolic Blood Pressure', 'unit_of_measurement': 'mmHg', 'icon': None},
+    'systolic_blood_pressure': {'friendly_name': 'Systolic Blood Pressure', 'unit_of_measurement': 'mmHg', 'icon': None},
+    'heart_pulse': {'friendly_name': 'Heart Pulse', 'unit_of_measurement': 'bpm', 'icon': None},
+    'temperature': {'friendly_name': 'Temperature', 'unit_of_measurement': '°C', 'icon': 'mdi:temperature-celsius'},
+    'spo2': {'friendly_name': 'SP02', 'unit_of_measurement': '%', 'icon': None},
+    'body_temperature': {'friendly_name': 'Body Temperature', 'unit_of_measurement': '°C', 'icon': 'mdi:temperature-celsius'},
+    'skin_temperature': {'friendly_name': 'Skin Temperature', 'unit_of_measurement': '°C', 'icon': 'mdi:temperature-celsius'},
+    'muscle_mass': {'friendly_name': 'Muscle Mass', 'unit_of_measurement': 'kg', 'icon': 'mdi:weight-kilogram'},
+    'hydration': {'friendly_name': 'Hydration', 'unit_of_measurement': '', 'icon': None},
+    'bone_mass': {'friendly_name': 'Bone Mass', 'unit_of_measurement': 'kg', 'icon': 'mdi:weight-kilogram'},
+    'pulse_wave_velocity': {'friendly_name': 'Pulse Wave Velocity', 'unit_of_measurement': '', 'icon': None}
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Optional(CONF_MONITORED_RESOURCES, default=NOKIA_HEALTH_DEFAULT_RESOURCES):
-        vol.All(cv.ensure_list, [vol.In(NOKIA_HEALTH_RESOURCES_LIST)]),
-    vol.Optional(CONF_CLOCK_FORMAT, default='24H'):
-        vol.In(['12H', '24H'])
+    vol.Required(CONF_USERNAME): cv.string,
+    vol.Optional(CONF_MONITORED_CONDITIONS, default=NOKIA_HEALTH_DEFAULT_RESOURCES):
+        vol.All(cv.ensure_list, [vol.In(NOKIA_HEALTH_RESOURCES_LIST)])
 })
 
 
@@ -172,9 +142,10 @@ def request_oauth_completion(hass):
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """Set up the Nokia Health sensor."""
     config_path = hass.config.path(NOKIA_HEALTH_CONFIG_FILE)
+    username = config.get(CONF_USERNAME)
     if os.path.isfile(config_path):
         config_file = load_json(config_path)
-        if config_file == DEFAULT_CONFIG:
+        if config_file.get(username) is None:  # User has no tokens in config dict
             request_app_setup(
                 hass, config, add_devices, config_path)
             return False
@@ -186,13 +157,15 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     if "nokia_health" in _CONFIGURING:
         hass.components.configurator.request_done(_CONFIGURING.pop("nokia_health"))
 
+    # use the per user config only
+    config_file = config_file.get(username)
     data_manager = NokiaHealthDataManager(config_file)
 
     devices = []
-    valid_attributes = ["weight", "fat_ratio", "fat_free_mass", "fat_mass_weight"]
-    for attribute in valid_attributes:
-        device = NokiaHealthSensor(data_manager, config_file.get("user_id"),
-                                   attribute, MASS_KILOGRAMS)
+    monitored_conditions = config.get(CONF_MONITORED_CONDITIONS)
+    for measurement_attribute in monitored_conditions:
+        device = NokiaHealthSensor(data_manager, username, config_file.get("user_id"),
+                                   measurement_attribute)
         devices.append(device)
     add_devices(devices)
     return True
@@ -279,20 +252,27 @@ class NokiaHealthAuthCallbackView(HomeAssistantView):
 class NokiaHealthSensor(Entity):
     """Implementation of a Nokia Health sensor."""
 
-    def __init__(self, data_manager, user_id, attribute, unit):
+    def __init__(self, data_manager, user_name, user_id, measurement_attribute):
         """Initialize the Nokia Health sensor."""
-        self._name = '{} {}'.format(user_id, attribute)
+        self._name = user_name + "'s " + NOKIA_HEALTH_RESOURCES_LIST.get(measurement_attribute).get('friendly_name')
+        self._user_id = user_id
         self._data_manager = data_manager
         self._state = None
-        self._attribute = attribute
-        self._unit_of_measurement = unit
-        self._icon = None
+        self._attributes = None
+        self._measurement_attribute = measurement_attribute
+        self._unit_of_measurement = NOKIA_HEALTH_RESOURCES_LIST.get(measurement_attribute).get('unit_of_measurement')
+        self._icon = NOKIA_HEALTH_RESOURCES_LIST.get(measurement_attribute).get('icon')
         self.update()
 
     @property
     def name(self):
         """Return the name of the sensor."""
         return self._name
+
+    @property
+    def unique_id(self):
+        """Return a unique, HASS-friendly identifier for this entity."""
+        return '{0}_{1}'.format(self._user_id, slugify(self._measurement_attribute))
 
     @property
     def state(self):
@@ -307,20 +287,21 @@ class NokiaHealthSensor(Entity):
     @property
     def icon(self):
         """Icon to use in the frontend, if any."""
-        pass
+        return self._icon
 
     @property
     def device_state_attributes(self):
         """Return the state attributes."""
-        return self._attribute
+        return self._attributes
 
     def update(self):
         """Get the latest data from the NokiaHealthDataManager and update the states."""
         if self._data_manager._update() is None:
             _LOGGER.debug("No new values, throtteling is active")
-        print(self._attribute, ': ', getattr(self._data_manager.data[0], self._attribute))
-        _LOGGER.info("%s for key %s" % (getattr(self._data_manager.data[0], self._attribute), self._attribute))
-        self._state = 23
+        print(self._measurement_attribute, ': ', getattr(self._data_manager.data[0], self._measurement_attribute))
+        _LOGGER.info("%s %s for key %s" % (self._name, getattr(self._data_manager.data[0], self._measurement_attribute), self._measurement_attribute))
+        self._state = "{:.2f}".format(getattr(self._data_manager.data[0], self._measurement_attribute))
+
 
 class NokiaHealthDataManager(object):
     """Manage data from Nokia Health. Bundles downloading all attributes for a measurement."""
