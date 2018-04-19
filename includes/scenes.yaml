@@ -19,8 +19,23 @@
       state: on
       brightness: 170
       rgb_color: [0,0,255]
+    light.lightstrip_bett:
+      state: on
+      brightness: 100
+      rgb_color: [0,0,255]
+    light.nachtkastenlampe:
+      state: on
+      brightness: 140
+      rgb_color: [0,0,255]
+    light.schlafzimmerlampe:
+      state: on
+      brightness: 100
+      rgb_color: [0,0,255]
+    media_player.schlafzimmer:
+      source: Now
+      state: playing
 
-- name: Goodnite
+- name: Good Night
   entities:
     light.lightstrip_bett:
       state: on
@@ -38,4 +53,26 @@
       brightness: 100
       xy_color: [ 0.5529, 0.4107 ]
     media_player.schlafzimmer:
+      source: Einschlafen
+      state: playing
+
+- name: Good Morning
+  entities:
+    light.lightstrip_bett:
+      state: on
+      transition: 1800
+      brightness: 100
+      xy_color: [ 0.5529, 0.4107 ]
+    light.nachtkastenlampe:
+      state: on
+      transition: 1800
+      brightness: 140
+      xy_color: [ 0.5013, 0.4242 ]
+    light.schlafzimmerlampe:
+      state: on
+      transition: 1800
+      brightness: 100
+      xy_color: [ 0.5529, 0.4107 ]
+    media_player.schlafzimmer:
+      source: Aufwachen
       state: playing

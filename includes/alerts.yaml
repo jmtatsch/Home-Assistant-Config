@@ -1,0 +1,10 @@
+  wohnungstuer_open:
+    name: "Wohnungst\xFCr noch offen"
+    done_message: "Wohnungst\xFCr geschlossen"
+    entity_id: binary_sensor.wohnungstur_state
+    state: 'on'
+    repeat: 5
+    can_acknowledge: True
+    skip_first: False
+    notifiers:
+      - notify.all
