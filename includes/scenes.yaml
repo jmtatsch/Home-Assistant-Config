@@ -8,7 +8,7 @@
       state: on
       brightness: 170
       rgb_color: [255,0,0]
-      
+
 - name: Relax
   entities:
     light.eckstrahler:
@@ -32,7 +32,7 @@
       brightness: 100
       rgb_color: [0,0,255]
     media_player.schlafzimmer:
-      source: Now
+      source: Relaxing Sleep Music
       state: playing
 
 - name: Good Night
@@ -53,7 +53,8 @@
       brightness: 100
       xy_color: [ 0.5529, 0.4107 ]
     media_player.schlafzimmer:
-      source: Einschlafen
+      source: Relaxing Sleep Music
+      volume_level: 0.2
       state: playing
 
 - name: Good Morning

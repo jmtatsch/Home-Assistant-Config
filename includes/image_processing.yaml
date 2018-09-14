@@ -1,15 +1,26 @@
 - platform: dlib_face_detect
   name: Gesichtserkennung
   source:
-  - entity_id: camera.Drachenhorst
-  - entity_id: camera.villa_emerald_vorne
-
+  - entity_id: camera.drachenhorst
+  - entity_id: camera.flur
+  - entity_id: camera.dafang1
+  - entity_id: camera.dafang2
+#  - entity_id: camera.dafang3
+  - entity_id: camera.dafang4
+#  - entity_id: camera.schokofabrik_hinten
+#  - entity_id: camera.schokofabrik_seite
 
 - platform: dlib_face_identify
   name: Gesichtsidentifizierung
   source:
-  - entity_id: camera.Drachenhorst
-  - entity_id: camera.villa_emerald_vorne
+  - entity_id: camera.drachenhorst
+  - entity_id: camera.flur
+  - entity_id: camera.dafang1
+  - entity_id: camera.dafang2
+#  - entity_id: camera.dafang3
+  - entity_id: camera.dafang4
+#  - entity_id: camera.schokofabrik_hinten
+#  - entity_id: camera.schokofabrik_seite
   faces:
     julian: ~/.homeassistant/faces/julian.jpg
     elisabeth: ~/.homeassistant/faces/elisabeth.jpg

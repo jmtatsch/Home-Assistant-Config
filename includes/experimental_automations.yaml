@@ -1,0 +1,51 @@
+
+- id: '13370'
+  alias: 'Motion detected'
+  trigger:
+    payload: 'ON'
+    platform: mqtt
+    topic: schokoladenfabrik/dafang1/motion
+  action:
+    service: notify.julian
+    data:
+      title: "Motion"
+      message: "detected."
+
+
+- id: '13371'
+  alias: 'New snapshot received'
+  trigger:
+    platform: mqtt
+    topic: schokoladenfabrik/dafang1/motion/snapshot
+  action:
+    service: notify.julian
+    data:
+      title: 'New snapshot'
+      message: "received."
+      data:
+        photo:
+          buffer: trigger.event.data
+
+- id: '13372'
+  alias: 'Start motion detection when not at home'
+  trigger:
+      platform: zone
+      event: leave
+      zone: zone.home
+      entity_id: device_tracker.your_device
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.mycamera_motion_detection
+
+- id: '13373'
+  alias: 'Stop motion detection when at home'
+  trigger:
+      platform: zone
+      event: enter
+      zone: zone.home
+      entity_id: device_tracker.your_device
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.mycamera_motion_detection

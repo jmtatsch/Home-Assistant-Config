@@ -268,16 +268,14 @@
 - id: '22'
   alias: Detected a face
   trigger:
-  - platform: event
-    event_type: image_processing.detect_face
-    event_data:
+  - event_data:
       entity_id: image_processing.Gesichtserkennung
+    event_type: image_processing.detect_face
+    platform: event
   action:
-  - service: notify.julian
-    data:
+  - data:
       message: Detected a face.
-      target:
-      - notify_all
+    service: notify.julian
 - id: '23'
   alias: Wetterwarnung München
   initial_state: true
@@ -315,10 +313,14 @@
 - id: '1506654915171'
   alias: Fernsehlicht an
   trigger:
-  - platform: state
-    entity_id: device_tracker.tv
+  - entity_id: device_tracker.tv
     from: not_home
+    platform: state
     to: home
+  condition:
+  - after: sunset
+    before: sunrise
+    condition: sun
   action:
   - data:
       entity_id: scene.Fernsehen
@@ -326,12 +328,12 @@
 - id: '1506655401045'
   alias: Fernsehlicht aus
   trigger:
-  - platform: state
-    entity_id: device_tracker.tv
+  - entity_id: device_tracker.tv
     from: home
+    platform: state
     to: not_home
   action:
-  - delay: '3:00'
+  - delay: 00:03:00
   - data:
       entity_id:
       - light.eckstrahler
@@ -478,7 +480,7 @@
 - action:
   - data:
       message: That's an example that
-      title: '''Send a message'
+      title: Send a message
     service: notify.julian
   alias: Neuer snap Augustenstr
   condition: []
@@ -486,3 +488,40 @@
   trigger:
   - platform: mqtt
     topic: augustenstrasse/dafang3/motion/snapshot
+- id: '1532501801403'
+  alias: Detect Billys Face
+  trigger:
+  - event_data:
+      entity_id: image_processing.dlib_face_dafang3_2
+    event_type: 'event_type: image_processing.detect_face'
+    platform: event
+  condition: []
+  action:
+  - service: notify.julian
+    data_template:
+      title: Face recognized
+      message: Recognized {{ trigger.event.data.name }} with probability {{ trigger.event.data.confidence
+        }}
+- id: '1536030351586'
+  alias: Kaffeemaschine an
+  trigger:
+  - at: '7:30'
+    platform: time
+  condition:
+  - above: '1'
+    condition: numeric_state
+    entity_id: sensor.occupants_home
+  action:
+  - data:
+      entity_id: light.onoff_plug_2
+    service: light.turn_on
+- id: '1536030408272'
+  alias: Kaffeemaschine aus
+  trigger:
+  - at: '8:30'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: light.onoff_plug_2
+    service: light.turn_off

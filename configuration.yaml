@@ -11,6 +11,9 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Berlin
   customize: !include customize.yaml
+  auth_providers:
+   - type: homeassistant
+   - type: legacy_api_password
 
 # Enables the frontend
 frontend:
@@ -56,6 +59,9 @@ ffmpeg:
 ios:
 
 homekit:
+  filter:
+    include_domains:
+      - light
 
 # expose python_scripts as services
 python_script:
@@ -86,17 +92,20 @@ homematic:
 #   - host: 192.168.181.1
 #     password: !secret fritzbox_password
 
-# lgtv
+# lgtv & onkyo receiver
 media_player:
-  platform: lg_netcast
-  host: 192.168.181.34
-  access_token: SMQRSA
+  - platform: lg_netcast
+    host: 192.168.181.34
+    access_token: SMQRSA
+  - platform: onkyo
+    host: 192.168.179.39
+    name: Receiver
 
 # hues
-light:
-  platform: hue
-  host: 192.168.181.20
-  allow_unreachable: true
+hue:
+  bridges:
+    - host: 192.168.181.20
+      allow_unreachable: true
 
 # locative & fritz
 device_tracker:
@@ -129,5 +138,6 @@ zone: !include includes/zones.yaml
 notify: !include includes/notify.yaml
 logger: !include includes/logger.yaml
 automation: !include automations.yaml
+# automation: !include includes/experimental_automations.yaml
 alert: !include includes/alerts.yaml
 plant: !include includes/plants.yaml

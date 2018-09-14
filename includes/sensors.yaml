@@ -8,6 +8,8 @@
     host: augustenbox.tatsch.it
     port: 8123
 
+  - platform: pi_hole
+
   - platform: fritzbox_callmonitor
     username: admin
     password: !secret fritzbox_password

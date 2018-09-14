@@ -28,6 +28,22 @@ sonos_play_radio:
         media_content_id: x-rincon-mp3radio://fm03-icecast.mtg-r.net/fm03_mp3
         media_content_type: music
 
+sonos_prepare_sleep:
+  alias: "Sonos Prepare Sleep"
+  sequence:
+    - service: media_player.select_source
+      data_template:
+        entity_id: media_player.schlafzimmer
+        source: Relaxing Sleep Music
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.schlafzimmer
+        volume_level: 0.02
+    - service: media_player.sonos_set_sleep_timer
+      data:
+        entity_id: media_player.schlafzimmer
+        sleep_time: 1800
+
   #Play a file
   #  data:
   #    entity_id: media_player.lounge
