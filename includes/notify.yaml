@@ -12,10 +12,15 @@
   name: telegram_elisabeth
   chat_id: !secret telegram_id_elisabeth
 
+- platform: matrix
+  name: matrix_augustenstrasse
+  default_room: "#augustenstrasse:matrix.tatsch.it"
+
 - platform: group
   name: julian
   services:
     - service: telegram_julian
+    - service: matrix_augustenstrasse
     # add further ways to notify the user
 
 - platform: group

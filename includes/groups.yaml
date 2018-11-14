@@ -88,6 +88,7 @@ Umwelt:
     - sensor.yr_cloudiness
     - sensor.yr_dewpoint_temperature
     - binary_sensor.workday_sensor
+    - sensor.waqi_munich
     - sensor.luftdaten_pm10
     - sensor.luftdaten_pm25
     - sensor.luftdaten_humidity
@@ -118,6 +119,15 @@ Telefonanschluss:
     - switch.callforwarding_0
     - switch.callforwarding_1
     - switch.callforwarding_2
+    - sensor.augustenbox_kbytesec_received
+    - sensor.augustenbox_kbytesec_sent
+    - sensor.augustenbox_bytes_received
+    - sensor.augustenbox_bytes_sent
+    - sensor.augustenbox_packetssec_received
+    - sensor.augustenbox_packetssec_sent
+    - sensor.augustenbox_packets_received
+    - sensor.augustenbox_packets_sent
+    - sensor.pihole_ads_blocked_today
 
 Julian:
   icon: mdi:account
@@ -130,10 +140,12 @@ Julian:
     - device_tracker.jretinamacbookpro
     - sensor.augustenstrasse
     - sensor.julian_home_eta
-    - sensor.julians_weight
-    - sensor.julians_fat_free_mass
-    - sensor.julians_fat_mass_weight
-    - sensor.julians_fat_ratio
+    - sensor.weight
+    - sensor.fat_free_mass
+    - sensor.fat_mass_weight
+    - sensor.fat_ratio
+    - sensor.breaches_juliantatschit
+    - sensor.breaches_tatschgmailcom
 
 Elisabeth:
   icon: mdi:account
@@ -150,6 +162,8 @@ Elisabeth:
     - sensor.elisabeths_fat_free_mass
     - sensor.elisabeths_fat_mass_weight
     - sensor.elisabeths_fat_ratio
+    - sensor.breaches_elisabethzilzmecom
+    - sensor.breaches_rakanzleizilzde
 
 Curcuma:
   entities:
@@ -180,6 +194,7 @@ Drachenhorst:
   entities:
     - camera.drachenhorst
     - group.dafang2
+    - sensor.occupants_drachenhorst 
 
 Villa Emerald:
   #icon: /local/emerald.jpg
@@ -191,9 +206,14 @@ Schokofabrik:
   #icon: /local/chocolate.jpg
   view: yes
   entities:
+    - sensor.occupants_geretsried
     - sensor.warnings_geretsried
     - sensor.warnings_geretsried_current_warning_level
     - sensor.warnings_geretsried_advance_warning_level
+    - sensor.3c3303_humidity
+    - sensor.3c3303_temperature
+    - sensor.9ec7ae_humidity
+    - sensor.9ec7ae_temperature
     - camera.schokofabrik_vorne
     - camera.schokofabrik_hinten
     - camera.schokofabrik_seite
@@ -261,3 +281,23 @@ Dafang3:
     - binary_sensor.dafang3_motion_sensor
     - cover.dafang3_move_leftright
     - cover.dafang3_move_updown
+
+Dafang4:
+    - camera.dafang4
+    - switch.dafang4_h264_rtsp_server
+    - switch.dafang4_mjpeg_rtsp_server
+    - sensor.dafang4
+    - device_tracker.dafang4
+    - sensor.dafang4_light_sensor
+    - switch.dafang4_ir_filter
+    - switch.dafang4_ir_led
+    - switch.dafang4_night_mode
+    - switch.dafang4_night_mode_auto
+    - switch.dafang4_blue_led
+    - switch.dafang4_yellow_led
+    - switch.dafang4_motion_detection
+    - switch.dafang4_motion_tracking
+    - camera.dafang4_motion_snapshot
+    - binary_sensor.dafang4_motion_sensor
+    - cover.dafang4_move_leftright
+    - cover.dafang4_move_updown

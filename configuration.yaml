@@ -13,7 +13,10 @@ homeassistant:
   customize: !include customize.yaml
   auth_providers:
    - type: homeassistant
-   - type: legacy_api_password
+   #- type: legacy_api_password
+
+# Enable the auth component
+auth:
 
 # Enables the frontend
 frontend:
@@ -74,6 +77,20 @@ telegram_bot:
       - !secret telegram_id_julian
       - !secret telegram_id_elisabeth
 
+# matrix
+matrix:
+  homeserver: !secret matrix_homeserver
+  username: !secret matrix_username
+  password: !secret matrix_password
+  rooms:
+    - "#augustenstrasse:matrix.tatsch.it"
+    - "#drachenhorst:matrix.tatsch.it"
+    - "#schokoladenfabrik:matrix.tatsch.it"
+
+  commands:
+    - word: my_command
+      name: my_command
+
 # Text to speech
 tts:
   platform: google
@@ -85,12 +102,6 @@ homematic:
     wireless:
       host: 192.168.181.24
       resolvenames: metadata
-
-# fritz
-#fritz:
-#  fritzboxes:
-#   - host: 192.168.181.1
-#     password: !secret fritzbox_password
 
 # lgtv & onkyo receiver
 media_player:
@@ -111,12 +122,6 @@ hue:
 device_tracker:
   - platform: locative
   - platform: fritz
-
-#bmw_connected_drive:
-#  Xsy:
-#    username: !secret bmw_connected_drive_user
-#    password: !secret bmw_connected_drive_password
-#    region: rest_of_world
 
 # mqtt with autodiscovery
 mqtt:

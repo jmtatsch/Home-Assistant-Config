@@ -40,17 +40,17 @@
 - id: '3'
   alias: Billy zu Hause
   trigger:
-    platform: state
-    entity_id: device_tracker.jiphone, device_tracker.windowsphone
+  - entity_id: device_tracker.jiphone_ios
     from: not_home
+    platform: state
     to: home
   action:
-  - service: notify.julian
-    data:
-      title: Billy
+  - data:
       message: ist jetzt zu Hause
-  - service: switch.turn_off
-    entity_id: switch.callforwarding_2
+      title: Billy
+    service: notify.julian
+  - entity_id: switch.callforwarding_2
+    service: switch.turn_off
 - id: '4'
   alias: Billy unterwegs
   trigger:
@@ -265,17 +265,19 @@
   - service: notify.julian
     data:
       message: Die Curcuma braucht Wasser.
+
 - id: '22'
   alias: Detected a face
   trigger:
   - event_data:
-      entity_id: image_processing.Gesichtserkennung
+      entity_id: face_detection_wohnzimmer
     event_type: image_processing.detect_face
     platform: event
   action:
   - data:
       message: Detected a face.
     service: notify.julian
+
 - id: '23'
   alias: Wetterwarnung München
   initial_state: true
@@ -488,29 +490,25 @@
   trigger:
   - platform: mqtt
     topic: augustenstrasse/dafang3/motion/snapshot
+
 - id: '1532501801403'
   alias: Detect Billys Face
   trigger:
   - event_data:
-      entity_id: image_processing.dlib_face_dafang3_2
-    event_type: 'event_type: image_processing.detect_face'
+      entity_id: image_processing.face_id_wohnzimmer
+    event_type: image_processing.detect_face
     platform: event
   condition: []
   action:
   - service: notify.julian
     data_template:
       title: Face recognized
-      message: Recognized {{ trigger.event.data.name }} with probability {{ trigger.event.data.confidence
-        }}
+      message: 'Recognized {{ trigger.event.data.name }} with probability {{ trigger.event.data.confidence }}'
 - id: '1536030351586'
   alias: Kaffeemaschine an
   trigger:
   - at: '7:30'
     platform: time
-  condition:
-  - above: '1'
-    condition: numeric_state
-    entity_id: sensor.occupants_home
   action:
   - data:
       entity_id: light.onoff_plug_2

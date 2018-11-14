@@ -1,24 +1,24 @@
 - platform: dlib_face_detect
-  name: Gesichtserkennung
   source:
-  - entity_id: camera.drachenhorst
-  - entity_id: camera.flur
-  - entity_id: camera.dafang1
-  - entity_id: camera.dafang2
+#  - entity_id: camera.drachenhorst
+#  - entity_id: camera.flur
+#  - entity_id: camera.dafang1
+#  - entity_id: camera.dafang2
 #  - entity_id: camera.dafang3
   - entity_id: camera.dafang4
+    name: Face Detection Wohnzimmer
 #  - entity_id: camera.schokofabrik_hinten
 #  - entity_id: camera.schokofabrik_seite
 
 - platform: dlib_face_identify
-  name: Gesichtsidentifizierung
   source:
-  - entity_id: camera.drachenhorst
-  - entity_id: camera.flur
-  - entity_id: camera.dafang1
-  - entity_id: camera.dafang2
+#  - entity_id: camera.drachenhorst
+#  - entity_id: camera.flur
+#  - entity_id: camera.dafang1
+#  - entity_id: camera.dafang2
 #  - entity_id: camera.dafang3
   - entity_id: camera.dafang4
+    name: Face ID Wohnzimmer
 #  - entity_id: camera.schokofabrik_hinten
 #  - entity_id: camera.schokofabrik_seite
   faces:
@@ -27,3 +27,16 @@
     birgit: ~/.homeassistant/faces/birgit.jpg
     klaus: ~/.homeassistant/faces/klaus.jpg
     laura: ~/.homeassistant/faces/laura.jpg
+
+- platform: tensorflow
+  source:
+    - entity_id: camera.dafang4
+  file_out:
+    - "/tmp/{% raw %}{{ camera_entity.split('.')[1] }}{% endraw %}_latest.jpg"
+    - "/tmp/{% raw %}{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}{% endraw %}.jpg"
+  model:
+    graph: /home/tatsch/.homeassistant/tensorflow/frozen_inference_graph.pb
+    categories:
+      - person
+      - car  
+      - truck

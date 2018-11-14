@@ -161,6 +161,17 @@
       - link_quality
       - noise_level
 
+  - platform: mqtt
+    state_topic: "augustenstrasse/dafang4"
+    name: "DaFang4"
+    json_attributes:
+      - uptime
+      - ssid
+      - bitrate
+      - signal_level
+      - link_quality
+      - noise_level
+
   - platform: luftdaten
     sensorid: 4611
     monitored_conditions:
@@ -170,9 +181,7 @@
   - platform: waqi
     token: fc3290abac9ff3719ad4c374cc493ecdc89991d1
     locations:
-      - munich
-    stations:
-      - lothstrasse
+      - Munich
 
   - platform: nokia_health
     username: Julian
@@ -199,3 +208,64 @@
       - Birke
       - Ambrosia
       - Gräser
+
+  - platform: mqtt
+    name: "3C3303 Temperature"
+    state_topic: "schokoladenfabrik/sonoff_3C3303/SENSOR"
+    value_template: "{{ value_json['AM2301'].Temperature }}"
+    unit_of_measurement: "°C"
+
+  - platform: mqtt
+    name: "3C3303 Humidity"
+    state_topic: "schokoladenfabrik/sonoff_3C3303/SENSOR"
+    value_template: "{{ value_json['AM2301'].Humidity }}"
+    unit_of_measurement: "%"
+
+  - platform: mqtt
+    name: "9EC7AE Temperature"
+    state_topic: "schokoladenfabrik/sonoff_9EC7AE/SENSOR"
+    value_template: "{{ value_json['SI7021'].Temperature }}"
+    unit_of_measurement: "°C"
+
+  - platform: mqtt
+    name: "9EC7AE Humidity"
+    state_topic: "schokoladenfabrik/sonoff_9EC7AE/SENSOR"
+    value_template: "{{ value_json['SI7021'].Humidity }}"
+    unit_of_measurement: "%"
+
+  - platform: mqtt
+    name: "4B464A Energy"
+    state_topic: "schokoladenfabrik/sonoff_4B464A/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Today"] }}'
+    unit_of_measurement: "kWh"
+
+  - platform: mqtt
+    name: "4B464A Power"
+    state_topic: "schokoladenfabrik/sonoff_4B464A/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Power"] }}'
+    unit_of_measurement: "W"
+
+  - platform: mqtt
+    name: "4B464A Voltage"
+    state_topic: "schokoladenfabrik/sonoff_4B464A/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Voltage"] }}'
+    unit_of_measurement: "V"
+
+  - platform: mqtt
+    name: "4B464A Current"
+    state_topic: "schokoladenfabrik/sonoff_4B464A/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Current"] }}'
+    unit_of_measurement: "A"
+
+  - platform: haveibeenpwned
+    email: 
+      - !secret email1 
+      - !secret email2
+      - !secret email3
+      - !secret email4
+
+  - platform: fail2ban
+    jails:
+      - sshd
+      - ha
+    scan_interval: 60
