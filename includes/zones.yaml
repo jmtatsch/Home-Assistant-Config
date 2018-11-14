@@ -1,0 +1,47 @@
+- name: University
+  latitude: 48.265940
+  longitude: 11.669889
+  radius: 500
+  icon: mdi:school
+
+- name: Garching
+  latitude: 48.252084
+  longitude: 11.638224
+  radius: 500
+  icon: mdi:worker
+
+- name: FIZ
+  latitude: 48.192620
+  longitude: 11.572595
+  radius: 1000
+  icon: mdi:worker
+
+- name: Unterschleissheim
+  latitude: 48.276464
+  longitude: 11.560110
+  radius: 500
+  icon: mdi:worker
+
+- name: Irma-Wenke-Str
+  latitude: 48.171297
+  longitude: 11.504205
+  radius: 250
+  icon: mdi:home
+
+- name: Ranhazweg
+  latitude: 48.059672
+  longitude: 11.663711
+  radius: 250
+  icon: mdi:home
+
+- name: Mauerkircherstr
+  latitude: 48.159997
+  longitude: 11.613366
+  radius: 250
+  icon: mdi:home
+
+- name: Geretsried
+  latitude: 47.881312
+  longitude: 11.475318
+  radius: 500
+  icon: mdi:home
