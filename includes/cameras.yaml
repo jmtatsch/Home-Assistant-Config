@@ -1,0 +1,55 @@
+  - platform: mjpeg
+    name: Drachenhorst
+    mjpeg_url: http://drachenhorst:8081
+
+  - platform: ffmpeg
+    name: DaFang1
+    input: -rtsp_transport tcp -i rtsp://192.168.179.36:8554/unicast
+
+  - platform: ffmpeg
+    name: DaFang2
+    input: -rtsp_transport tcp -i rtsp://192.168.180.30:8554/unicast
+
+  - platform: ffmpeg
+    name: DaFang3
+    input: -rtsp_transport tcp -i rtsp://192.168.181.45:8554/unicast
+
+  - platform: ffmpeg
+    name: DaFang4
+    input: -rtsp_transport tcp -i rtsp://192.168.181.46:8554/unicast
+
+  - platform: mjpeg
+    name: Flur
+    mjpeg_url: http://emeraldwatchfront.fritz.box:8081
+
+#  - platform: mjpeg
+#    name: Parking Watch
+#    mjpeg_url: http://parkingwatch:8081
+
+#  - platform: mjpeg
+#    name: Schokofabrik Vorne
+#    mjpeg_url: http://schokoladenfabrik-vorne:8081
+
+  - platform: mjpeg
+    name: Schokofabrik Hinten
+    mjpeg_url: http://schokoladenfabrik-hinten:8081
+
+  - platform: mjpeg
+    name: Schokofabrik Seite
+    mjpeg_url: http://schokoladenfabrik-seite:8081
+
+#  - platform: onvif
+#    host: 192.168.179.20
+#    port: 8899
+#    name: Schokofabrik Seite
+#    username: admin
+#    password: !secret onvif_password
+#    stream_auth: true
+
+#  - platform: generic
+#    name: Marillencam Krems-Angern
+#    still_image_url: http://camera.marillengarten.at/webcam/marille1/current/720.jpg
+
+#  - platform: generic
+#    name: Marillencam Rossatz-Arnsdorf
+#    still_image_url: http://www.wachauermarille.at/webcam/P_1920.jpg
